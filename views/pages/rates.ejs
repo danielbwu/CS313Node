@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Postal Rates</title>
+    <% include ../partials/header.ejs %>
+</head>
+
+<body>
+    <div class="container">
+        <div class="container col-md-2"></div>
+        <div class="container col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h1>Postal Rates</h1>
+                </div>
+                <div class="panel-body">
+                    <form action="/getRates" method="GET">
+                        <div class="form-group">
+                            <label for="weight">Weight (oz.)</label>
+                            <input type="number" class="form-control" id="weight" name="weight" placeholder="10oz.">
+                            <br />
+                            <label for="type">Mail Type</label>
+                            <select class="form-control" id="type" name="type">
+                                <option value="" selected disabled hidden>Select Type</option>
+                                <option value="1">Letter (stamped)</option>
+                                <option value="2">Letter (metered)</option>
+                                <option value="3">Large Envelope (flat)</option>
+                                <option value="4">First-Class Package Service—Retail</option>
+                            </select>
+                            <br />
+                            <button type="submit" class="btn btn-primary">Get Rates</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="container col-md-2"></div>
+    </div>
+</body>
+
+</html>
