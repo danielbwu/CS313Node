@@ -4,6 +4,32 @@
 <head>
     <title>Postal Rates</title>
     <% include ../partials/header.ejs %>
+    <script type="text/javascript">
+        function validate() {
+            var weight = parseInt(document.getElementById("weight").value);
+            var type = parseInt(document.getElementById("type").value);
+            console.log("Weight:", weight, "\n", "Type:", type);
+
+            if (type == 1 || type == 2) {
+                 if (weight <= 0 || weight > 3.5) {
+                     window.alert("INVALID WEIGHT\nLetters must be less than 3.5oz");
+                     return false;
+                 }
+            }
+            else if (type == 3 || type == 4) {
+                if (weight <= 0 || weight > 13) {
+                     window.alert("INVALID WEIGHT\nEnvelopes and Packages must be less than 13oz");
+                     return false;
+                 }
+            }
+            else {
+                window.alert("Please select a mail type");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </head>
 
 <body>
@@ -29,7 +55,7 @@
                                 <option value="4">First-Class Package Service—Retail</option>
                             </select>
                             <br />
-                            <button type="submit" class="btn btn-primary">Get Rates</button>
+                            <button type="submit" class="btn btn-primary" onclick="return validate()">Get Rates</button>
                         </div>
                     </form>
                 </div>

@@ -16,6 +16,8 @@ function getRates(req, res) {
   var weight = req.query.weight;
   var type = req.query.type;
   var rate = 0;
+  console.log("Weight:", weight);
+  console.log("Type:", type);
 
   if (weight) {
     console.log("Weight:", weight);
@@ -29,10 +31,12 @@ function getRates(req, res) {
   } else {
 
   }
-//Hello
-  //if (weight && type) {
-    switch(type) {
+
+  //Determine rate by type, then weight
+  if (weight && type) {
+    switch(parseInt(type)) {
       case 1: //Letters (stamped)
+        console.log("Type: Letter (stamped)");
         switch(Math.ceil(weight)) {
           case 1:
             rate = 0.5;
@@ -52,6 +56,7 @@ function getRates(req, res) {
         break;
 
       case 2: //Letters (metered)
+      console.log("Type: Letters (metered)");
         switch(Math.ceil(weight)) {
           case 1:
             rate = 0.47;
@@ -71,6 +76,7 @@ function getRates(req, res) {
         break;
 
       case 3: //Large Envelopes (flats)
+      console.log("Type: Large Envelopes (flats)");
         switch(Math.ceil(weight)) {
           case 1:
             rate = 1.00;
@@ -117,6 +123,7 @@ function getRates(req, res) {
         break;
 
       case 4: //First-Class Package Service - Retail
+      console.log("Type: First-Class Package Service - Retail");
         switch(Math.ceil(weight)) {
           case 1:
           case 2:
@@ -151,10 +158,14 @@ function getRates(req, res) {
       break;
 
       default:
+        console.log("Type: Default");
         rate = 0;
     }
-  //}
+  }
 
+  let types = ["", "Letter (Stamped)", "Letter (Metered)", 
+              "Large Envelope (Flats)", "First-Class Package Service—Retail"]
   console.log("Rate:", rate);
-  res.render('pages/rateResults');
+  //res.set('Content-Type', 'application/javascript');
+  res.render('pages/rateResults', {weight: weight, type: types[parseInt(type)], rate: rate.toFixed(2)});
 }
