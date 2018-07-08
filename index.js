@@ -29,7 +29,7 @@ function getRates(req, res) {
   } else {
 
   }
-
+//Hello
   //if (weight && type) {
     switch(type) {
       case 1: //Letters (stamped)
