@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 
+var apiController = require('./controllers/apiController.js');
 const app = express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
@@ -10,6 +11,9 @@ const app = express()
   .get('/hello', (req, res) => res.send('Hello World'))
   .get('/rates', (req, res) => res.render('pages/rates'))
   .get('/getRates', getRates)
+  .get('/api/spells', apiController.getSpells)
+  .get('/api/classes', apiController.getClasses)
+  .get('/api/schools', apiController.getSchools)
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 function getRates(req, res) {
