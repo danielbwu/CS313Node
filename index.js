@@ -24,14 +24,15 @@ function getClasses(req, res) {
     console.log("Retrieving classes");
     var qtext = "SELECT * FROM class";
 
-    pool.query("SELECT * FROM class", function(err, result) {
+    pool.query(qtext, function(err, result) {
 
       if (err) {
         throw err;
+        //res.status(500).send(err);
       }
   
       console.log("Back from db with result: ", result);
-      res.json(result.rows);	
+      res.status(200).json(result.rows);	
   
     });
     
