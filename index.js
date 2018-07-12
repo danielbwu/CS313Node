@@ -1,14 +1,10 @@
 const express = require('express')
 const path = require('path')
-const {Pool, Client} = require('pg');
-const PORT = process.env.PORT || 5000
-const pool = new Pool({
-  user: 'ordrrpumualgtc',
-  host: 'ec2-184-73-199-189.compute-1.amazonaws.com',
-  database: 'dbp22j980k9d0c',
-  password: 'c064fea68415861ee41a4e04d13fa7ba564c31840ecce3a157d7a3d52aa6ecec',
-  port: 5432
-});
+const { Pool } = require("pg");
+const conString = process.env.DATABASE_URL || 'postgres://ordrrpumualgtc:c064fea68415861ee41a4e04d13fa7ba564c31840ecce3a157d7a3d52aa6ecec@ec2-184-73-199-189.compute-1.amazonaws.com:5432/dbp22j980k9d0c';
+const PORT = process.env.PORT || 5000;
+
+
 
 var apiController = require('./controllers/apiController.js');
 const app = express()
@@ -25,31 +21,20 @@ const app = express()
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 function getClasses(req, res) {
-  console.log("Retrieving classes");
+    console.log("Retrieving classes");
     var qtext = "SELECT * FROM class";
 
-    // pg.connect(conString, function(err, client, done) {
-    //     if (err) {
-    //         console.log("Error:", err);
-    //         return res.json(err);
-    //     }
-    //     console.log("Connected to DB");
-    //     client.query(qtext, function(err, result) {
-    //         done();
-    //         if (err) {
-    //             return console.error('error running query', err);
-    //         }
-    //         res.send(result);
-    //     });
-    // });
+    pool.query("SELECT * FROM class", function(err, result) {
 
-    
-
-    pool.query(qtext, (err, response) => {
-        console.log(err, response);
-        res.json(err);
-        pool.end();
+      if (err) {
+        throw err;
+      }
+  
+      console.log("Back from db with result: ", result);
+      res.json(result.rows);	
+  
     });
+    
 }
 
 
