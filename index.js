@@ -15,27 +15,55 @@ const app = express()
   .get('/hello', (req, res) => res.send('Hello World'))
   .get('/rates', (req, res) => res.render('pages/rates'))
   .get('/getRates', getRates)
-  .get('/api/spells', apiController.getSpells)
+  .get('/api/spells', getSpells)
   .get('/api/classes', getClasses)
-  .get('/api/schools', apiController.getSchools)
+  .get('/api/schools', getSchools)
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
+//Gets player classes
 function getClasses(req, res) {
     console.log("Retrieving classes");
     var qtext = "SELECT * FROM class";
 
     pool.query(qtext, function(err, result) {
 
-      if (err) {
-        throw err;
-        //res.status(500).send(err);
-      }
+      if (err) { throw err; }
   
       console.log("Back from db with result: ", result);
       res.status(200).json(result.rows);	
   
     });
     
+}
+
+//Gets schools of magic
+function getSchools(req, res) {
+  console.log("Retrieving schools");
+    var qtext = "SELECT * FROM school";
+
+    pool.query(qtext, function(err, result) {
+
+      if (err) { throw err; }
+  
+      console.log("Back from db with result: ", result);
+      res.status(200).json(result.rows);	
+  
+    });
+}
+
+//Gets spells
+function getSpells(req, res) {
+  console.log("Retrieving spells");
+    var qtext = "SELECT * FROM spells";
+
+    pool.query(qtext, function(err, result) {
+
+      if (err) { throw err; }
+  
+      console.log("Back from db with result: ", result);
+      res.status(200).json(result.rows);	
+  
+    });
 }
 
 
