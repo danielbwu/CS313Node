@@ -15,9 +15,9 @@ const app = express()
   .get('/hello', (req, res) => res.send('Hello World'))
   .get('/rates', (req, res) => res.render('pages/rates'))
   .get('/getRates', getRates)
-  .get('/api/spells', getSpells)
-  .get('/api/classes', getClasses)
-  .get('/api/schools', getSchools)
+  .get('/api/spells', apiController.getSpells)
+  .get('/api/classes', apiController.getClasses)
+  .get('/api/schools', apiController.getSchools)
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 //Gets player classes
