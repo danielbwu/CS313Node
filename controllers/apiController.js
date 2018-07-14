@@ -7,14 +7,15 @@ function getClasses(req, res) {
     console.log("Retrieving classes");
     var qtext = "SELECT * FROM class";
 
-    pool.query(qtext, function(err, result) {
+    handleGet(req, res, qtext);
+    // pool.query(qtext, function(err, result) {
 
-      if (err) { throw err; }
+    //   if (err) { throw err; }
   
-      console.log("Back from db with result: ", result);
-      res.status(200).json(result.rows);	
+    //   console.log("Back from db with result: ", result);
+    //   res.status(200).json(result.rows);	
   
-    });
+    // });
     
 }
 
@@ -23,14 +24,15 @@ function getSchools(req, res) {
     console.log("Retrieving schools");
     var qtext = "SELECT * FROM school";
 
-    pool.query(qtext, function(err, result) {
+    handleGet(req, res, qtext);
+    // pool.query(qtext, function(err, result) {
 
-      if (err) { throw err; }
+    //   if (err) { throw err; }
   
-      console.log("Back from db with result: ", result);
-      res.status(200).json(result.rows);	
+    //   console.log("Back from db with result: ", result);
+    //   res.status(200).json(result.rows);	
   
-    });
+    // });
 }
 
 //Gets spells
@@ -38,19 +40,32 @@ function getSpells(req, res) {
     console.log("Retrieving spells");
     var qtext = "SELECT * FROM spells";
 
-    pool.query(qtext, function(err, result) {
+    handleGet(req, res, qtext);
+    // pool.query(qtext, function(err, result) {
 
-      if (err) { throw err; }
+    //   if (err) { throw err; }
   
-      console.log("Back from db with result: ", result);
-      res.status(200).json(result.rows);	
+    //   console.log("Back from db with result: ", result);
+    //   res.status(200).json(result.rows);	
   
-    });
+    // });
 }
 
 //Adds a spell to the database
 function addSpell(req, res) {
     console.log("Adding a new spell");
+    res.send("Add spell stub");
+}
+
+function handleGet(req, res, qtext) {
+    pool.query(qtext, function(err, result) {
+
+        if (err) { throw err; }
+    
+        console.log("Back from db with result: ", result);
+        res.status(200).json(result.rows);	
+    
+      });
 }
 
 module.exports = {
