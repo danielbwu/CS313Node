@@ -2,13 +2,17 @@ const express = require('express')
 const path = require('path')
 const { Pool } = require("pg");
 const connectionString = process.env.DATABASE_URL;
-const PORT = process.env.PORT || 5000;
-
 const pool = new Pool({connectionString: connectionString});
+var session = require('express-session');
+const PORT = process.env.PORT || 5000;
+const bodyParser = require('body-parser')
+
 
 var apiController = require('./controllers/apiController.js');
 const app = express()
   .use(express.static(path.join(__dirname, 'public')))
+  .use(bodyParser.json())
+  .use(bodyParser.urlencoded({ extended: true }))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
@@ -18,53 +22,54 @@ const app = express()
   .get('/api/spells', apiController.getSpells)
   .get('/api/classes', apiController.getClasses)
   .get('/api/schools', apiController.getSchools)
+  .post('/spells/add', apiController.addSpell)
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-//Gets player classes
-function getClasses(req, res) {
-    console.log("Retrieving classes");
-    var qtext = "SELECT * FROM class";
+// //Gets player classes
+// function getClasses(req, res) {
+//     console.log("Retrieving classes");
+//     var qtext = "SELECT * FROM class";
 
-    pool.query(qtext, function(err, result) {
+//     pool.query(qtext, function(err, result) {
 
-      if (err) { throw err; }
+//       if (err) { throw err; }
   
-      console.log("Back from db with result: ", result);
-      res.status(200).json(result.rows);	
+//       console.log("Back from db with result: ", result);
+//       res.status(200).json(result.rows);	
   
-    });
+//     });
     
-}
+// }
 
-//Gets schools of magic
-function getSchools(req, res) {
-  console.log("Retrieving schools");
-    var qtext = "SELECT * FROM school";
+// //Gets schools of magic
+// function getSchools(req, res) {
+//   console.log("Retrieving schools");
+//     var qtext = "SELECT * FROM school";
 
-    pool.query(qtext, function(err, result) {
+//     pool.query(qtext, function(err, result) {
 
-      if (err) { throw err; }
+//       if (err) { throw err; }
   
-      console.log("Back from db with result: ", result);
-      res.status(200).json(result.rows);	
+//       console.log("Back from db with result: ", result);
+//       res.status(200).json(result.rows);	
   
-    });
-}
+//     });
+// }
 
-//Gets spells
-function getSpells(req, res) {
-  console.log("Retrieving spells");
-    var qtext = "SELECT * FROM spells";
+// //Gets spells
+// function getSpells(req, res) {
+//   console.log("Retrieving spells");
+//     var qtext = "SELECT * FROM spells";
 
-    pool.query(qtext, function(err, result) {
+//     pool.query(qtext, function(err, result) {
 
-      if (err) { throw err; }
+//       if (err) { throw err; }
   
-      console.log("Back from db with result: ", result);
-      res.status(200).json(result.rows);	
+//       console.log("Back from db with result: ", result);
+//       res.status(200).json(result.rows);	
   
-    });
-}
+//     });
+// }
 
 
 function getRates(req, res) {

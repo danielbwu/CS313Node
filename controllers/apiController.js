@@ -1,5 +1,5 @@
 const { Pool } = require("pg");
-const connectionString = process.env.DATABASE_URL || 'postgres://ordrrpumualgtc:c064fea68415861ee41a4e04d13fa7ba564c31840ecce3a157d7a3d52aa6ecec@ec2-184-73-199-189.compute-1.amazonaws.com:5432/dbp22j980k9d0c';
+const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({connectionString: connectionString});
 
 //Gets player classes
@@ -20,7 +20,7 @@ function getClasses(req, res) {
 
 //Gets schools of magic
 function getSchools(req, res) {
-  console.log("Retrieving schools");
+    console.log("Retrieving schools");
     var qtext = "SELECT * FROM school";
 
     pool.query(qtext, function(err, result) {
@@ -35,7 +35,7 @@ function getSchools(req, res) {
 
 //Gets spells
 function getSpells(req, res) {
-  console.log("Retrieving spells");
+    console.log("Retrieving spells");
     var qtext = "SELECT * FROM spells";
 
     pool.query(qtext, function(err, result) {
@@ -48,8 +48,14 @@ function getSpells(req, res) {
     });
 }
 
+//Adds a spell to the database
+function addSpell(req, res) {
+    console.log("Adding a new spell");
+}
+
 module.exports = {
     getSpells: getSpells,
     getClasses: getClasses,
-    getSchools: getSchools
+    getSchools: getSchools,
+    addSpell: addSpell
 }
