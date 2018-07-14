@@ -20,6 +20,11 @@ const app = express()
   }))
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
+  .use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'localhost:5000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    next();
+  })
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
