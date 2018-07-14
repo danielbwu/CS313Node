@@ -7,7 +7,7 @@
 
         //Adds a spell to the DB
         this.addSpell = function (spell) {
-            $http.post(baseurl + "/spell/add", spell);
+            $http.post(baseurl + "spell/add", spell);
         }
     });
 })();
