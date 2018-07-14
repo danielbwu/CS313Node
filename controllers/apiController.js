@@ -68,7 +68,7 @@ function handleGet(req, res, qtext) {
         if (err) { res.status(500).json(err); }
     
         console.log("Back from db with result: ", result);
-        res.status(200).json(result);	
+        res.status(200).json(result.rows);	
     
     });
 }
