@@ -26,14 +26,27 @@ const app = express()
   .get('/hello', (req, res) => res.send('Hello World'))
   .get('/rates', (req, res) => res.render('pages/rates'))
   .get('/getRates', getRates)
+  .get('/Admin/AddSpell', verifyAdmin, adminAddSpell)
   .get('/api/spells', apiController.getSpells)
   .get('/api/classes', apiController.getClasses)
   .get('/api/schools', apiController.getSchools)
-  .post('/spells/add', apiController.addSpell)
+  .post('/api/spells/add', verifyAdmin, apiController.addSpell)
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 
+function verifyLogin(req, res, next) {
+  console.log("Verifying login...");
+  next();
+}
 
+function verifyAdmin(req, res, next) {
+  console.log("Verifying Admin...");
+  next();
+}
+
+function adminAddSpell(req, res) {
+  res.render('pages/addSpellForm');
+}
 
 function getRates(req, res) {
   var weight = req.query.weight;

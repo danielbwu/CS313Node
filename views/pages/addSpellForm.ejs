@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add Spells</title>
+    <% include ../partials/header.ejs %>
+        <script src="/scripts/adminService.js"></script>
+        <script src="/scripts/adminController.js"></script>
+
+</head>
+
+<body ng-app="SpellBook" ng-controller="AdminController">
+    <div class="container" ng-init="init()">
+        <div class="container">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>Add a spell</h2>
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <!--Name-->
+                        <div class="col-md-2 col-sm-2">
+                            <div class="form-group">
+                                <label for="spellName">Spell Name:</label>
+                                <input type="text" ng-model="spell.name" class="form-control" id="spellName" placeholder="Enter spell name">
+                            </div>
+                            <!--Level-->
+                            <div class="form-group">
+                                <label for="spellLevel">Level:</label>
+                                <select ng-model="spell.level" class="form-control" id="spellLevel">
+                                    <option selected disabled hidden value="">Select Level</option>
+                                    <option value="0">Cantrip</option>
+                                    <option value="1">1st Level</option>
+                                    <option value="2">2nd Level</option>
+                                    <option value="3">3rd Level</option>
+                                    <option value="4">4th Level</option>
+                                    <option value="5">5th Level</option>
+                                    <option value="6">6th Level</option>
+                                    <option value="7">7th Level</option>
+                                    <option value="8">8th Level</option>
+                                    <option value="9">9th Level</option>
+                                </select>
+                            </div>
+                            <!--School-->
+                            <div class="form-group">
+                                <label for="spellSchool">School:</label>
+                                <select ng-model="spell.school_id" class="form-control" id="spellSchool">
+                                    <option selected disabled hidden value="">Select School</option>
+                                    <option value="1">Abjuration</option>
+                                    <option value="2">Conjuration</option>
+                                    <option value="3">Divination</option>
+                                    <option value="4">Enchantment</option>
+                                    <option value="5">Evocation</option>
+                                    <option value="6">Illusion</option>
+                                    <option value="7">Necromancy</option>
+                                    <option value="8">Transmutation</option>
+                                </select>
+                            </div>
+                            <!--Casting Time-->
+                            <div class="form-group">
+                                <label for="spellCastTime">Casting Time:</label>
+                                <input type="text" ng-model="spell.casting_time" class="form-control" id="spellCastTime" placeholder="1 action">
+                            </div>
+                            <!--Target-->
+                            <div class="form-group">
+                                <label for="spellTarget">Target:</label>
+                                <input type="text" ng-model="spell.target" class="form-control" id="spellTarget" placeholder="1 target">
+                            </div>
+                            <!--Range-->
+                            <div class="form-group">
+                                <label for="spellRange">Range:</label>
+                                <input type="text" ng-model="spell.range" class="form-control" id="spellRange" placeholder="60 feet">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <!--Components-->
+                            <div class="form-check">
+                                <p>Components:</p>
+                                <input type="checkbox" ng-model="spell.component_v" class="form-check-input" id="spell_v">
+                                <label class="form-check-label" for="spell_v">V</label>
+                                <br>
+                                <input type="checkbox" ng-model="spell.component_s" class="form-check-input" id="spell_s">
+                                <label class="form-check-label" for="spell_s">S</label>
+                                <br>
+                                <input type="checkbox" ng-model="spell.component_m" class="form-check-input" id="spell_m">
+                                <label class="form-check-label" for="spell_m">M</label>
+                                <input type="text" ng-model="spell.component_desc" class="form-control" id="spellComp" placeholder="Material component" ng-disabled="!spell.component_m">
+                            </div>
+                            <!--Ritual-->
+                            <div class="form-check">
+                                <input type="checkbox" ng-model="spell.ritual" class="form-check-input" id="spell_v">
+                                <label class="form-check-label" for="spellRitual">Ritual</label>
+                                <br>
+                            </div>
+                            <!--Concentration-->
+                            <div class="form-check">
+                                <input type="checkbox" ng-model="spell.concentration" class="form-check-input" id="spellConc">
+                                <label class="form-check-label" for="spellConc">Concentration</label>
+                            </div>
+                            <!--Duration-->
+                            <div class="form-group">
+                                <label for="spellDuration">Duration:</label>
+                                <input type="text" ng-model="spell.duration" class="form-control" id="spellDuration" placeholder="1 minute">
+                            </div>
+                            <!--Description-->
+                            <div class="form-group">
+                                <label for="spellDesc">Description</label>
+                                <textarea ng-model="spell.description" class="form-control" id="spellDesc" rows="3"></textarea>
+                            </div>
+                            <input type="submit" class="btn btn-primary" value="Add Spell" ng-click="addSpell()">
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
