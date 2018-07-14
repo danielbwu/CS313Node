@@ -54,6 +54,7 @@ function getSpells(req, res) {
 //Adds a spell to the database
 function addSpell(req, res) {
     console.log("Adding a new spell");
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5000');
     if (req.body.spell) {
         console.log("Adding spell:", req.body.spell);
         res.json(req.body.spell);
@@ -69,7 +70,7 @@ function handleGet(req, res, qtext) {
         console.log("Back from db with result: ", result);
         res.status(200).json(result.rows);	
     
-      });
+    });
 }
 
 module.exports = {
