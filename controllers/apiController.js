@@ -38,7 +38,7 @@ function getSchools(req, res) {
 //Gets spells
 function getSpells(req, res) {
     console.log("Retrieving spells");
-    var qtext = "SELECT * FROM spells";
+    var qtext = "SELECT * FROM spell";
 
     handleGet(req, res, qtext);
     // pool.query(qtext, function(err, result) {
