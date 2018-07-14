@@ -54,6 +54,10 @@ function getSpells(req, res) {
 //Adds a spell to the database
 function addSpell(req, res) {
     console.log("Adding a new spell");
+    if (req.body.spell) {
+        console.log("Adding spell:", req.body.spell);
+        res.json(req.body.spell);
+    }
     res.send("Add spell stub");
 }
 
