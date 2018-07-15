@@ -76,6 +76,22 @@ function linkClasses(spellId, classes) {
     for (i = 0; i < classes.length; i++) {
         let qtext = "INSERT INTO spell_class(spell_id, class_id) VALUES (" + spellId + ", " + classes[i] + ") RETURNING id;";
         console.log("Query:", qtext);
+
+        //Query DB
+        try {
+            console.log("Attempting to link spell '", spellId, "' to class '", classes[i], "'");
+            pool.query(qtext, function (err, result) {
+                if (err) { 
+                    console.log
+                    throw err;
+                } else {
+                    console.log("Success")
+                }
+            });
+        } catch(error) {
+            console.error("Failed to create link");
+            console.error(error);
+        }
     }
 }
 
