@@ -4,7 +4,7 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
 
     //Initializes data
     $scope.init = function () {
-
+        $scope.getAllSpells();
     };
 
     //Gets all spells
