@@ -74,7 +74,7 @@ function addSpell(req, res) {
 //Adds class relation to a spell
 function linkClasses(spellId, classes) {
     for (i = 0; i < classes.length; i++) {
-        let qtext = "INSERT INTO spell_class(spell_id, class_id) VALUES (" + spellId + ", " + classes[i] + ");";
+        let qtext = "INSERT INTO spell_class(spell_id, class_id) VALUES (" + spellId + ", " + classes[i] + ") RETURNING id;";
         console.log("Query:", qtext);
     }
 }

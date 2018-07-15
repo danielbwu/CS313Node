@@ -26,6 +26,7 @@ const app = express()
   .get('/hello', (req, res) => res.send('Hello World'))
   .get('/rates', (req, res) => res.render('pages/rates'))
   .get('/getRates', getRates)
+  .get('/SpellBook/Spells', searchSpells)
   .get('/Admin/AddSpell', verifyAdmin, adminAddSpell)
   .get('/api/spells', apiController.getSpells)
   .get('/api/classes', apiController.getClasses)
@@ -35,16 +36,23 @@ const app = express()
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 
+//View all spells
+function searchSpells(req, res) {
+  res.render('pages/searchSpells');
+}
+//Verifies user login
 function verifyLogin(req, res, next) {
   console.log("Verifying login...");
   next();
 }
 
+//Verifies admin login
 function verifyAdmin(req, res, next) {
   console.log("Verifying Admin...");
   next();
 }
 
+//Directs to admin spell add form
 function adminAddSpell(req, res) {
   res.render('pages/addSpellForm');
 }
