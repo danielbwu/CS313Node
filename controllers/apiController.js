@@ -53,7 +53,7 @@ function addSpell(req, res) {
                     res.status(500).json(err);
                 } else {
                     console.log("Successfully added spell:", spell.name);
-                    console.log("Result:", result);
+                    console.log(result);
                     res.status(200).json(result);
                 }
             });
@@ -66,7 +66,7 @@ function addSpell(req, res) {
         console.log("addSpell(): Missing body parameters");
         res.status(500).send("Invalid Spell");
     }
-    res.end();
+    //res.end();
 }
 
 //Prepares text for DB INSERT
