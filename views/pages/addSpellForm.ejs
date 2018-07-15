@@ -108,8 +108,16 @@
                                 <label for="spellDesc">Description</label>
                                 <textarea ng-model="spell.description" class="form-control" id="spellDesc" rows="3"></textarea>
                             </div>
+                            <!--Classes-->
+                            <div class="form-check">
+                                <span ng-repeat="c in classes">
+                                    <input type="checkbox" ng-model="c.selected" class="form-check-input">
+                                    <label class="form-check-label">{{c.name}}</label>
+                                    <br />
+                                </span>
+                            </div>
                             <input type="submit" class="btn btn-primary" value="Add Spell" ng-click="addSpell()">
-                            
+                            <button type="button" class="btn btn-primary" ng-click="showClasses()">Test</button>
                         </div>
 
                     </form>

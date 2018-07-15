@@ -55,9 +55,10 @@ function getSpells(req, res) {
 function addSpell(req, res) {
     console.log("Adding a new spell");
 
-    if (req.body.spell) {
+    if (req.body.spell && req.body.classes) {
         if (validateSpell(req.body.spell)) {
             var spell = req.body.spell;
+            var classes = req.body.classes;
 
             var qtext = "INSERT INTO spell(name, level, school_id, casting_time, target, range, component_v, component_s, component_m, component_desc, ritual, duration, concentration, description) " +
                 "VALUES (" + processText(spell.name) + ", " + spell.level + ", " + spell.school_id + ", " + processText(spell.casting_time) + ", " + processText(spell.target) + ", " + processText(spell.range) + ", " + spell.component_v + ", " +
@@ -65,11 +66,27 @@ function addSpell(req, res) {
 
             console.log("Adding spell:", spell);
             console.log("SQL Text", qtext);
-            res.send(qtext);
-            //res.json(spell);
+            console.log("Classes", classes);
+            //res.status(200).send(qtext);
+            
+            //Query Database
+            pool.query(qtext, function (err, result) {
+
+                if (err) { res.status(500).json(err); }
+        
+                console.log("Successfully added spell:", result);
+                res.status(200).json({success: true});
+        
+            });
+
+        } else {
+            console.log("addSpell(): Invalid Spell");
+            res.status(500).send("Invalid Spell");
         }
+    } else {
+        console.log("addSpell(): Missing body parameters");
+        res.status(500).send("Invalid Spell");
     }
-    //res.send("Add spell stub");
     res.end();
 }
 

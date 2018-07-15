@@ -6,8 +6,8 @@
         const baseurl = "../../api/";
 
         //Adds a spell to the DB
-        this.addSpell = function (spell) {
-            let params = { spell: spell };
+        this.addSpell = function (spell, classes) {
+            let params = { spell: spell, classes: classes };
             return $http.post(baseurl + "spells/add", params);
         };
 

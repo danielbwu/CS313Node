@@ -17,6 +17,33 @@ app.controller('AdminController', ['AdminService', '$scope', '$http', function (
         description: ""
     };
 
+    $scope.classes = [
+        {name: "Bard",
+        id: 1,
+        selected: false},
+        {name: "Cleric",
+        id: 2,
+        selected: false},
+        {name: "Druid",
+        id: 3,
+        selected: false},
+        {name: "Paladin",
+        id: 4,
+        selected: false},
+        {name: "Ranger",
+        id: 5,
+        selected: false},
+        {name: "Sorcerer",
+        id: 6,
+        selected: false},
+        {name: "Warlock",
+        id: 7,
+        selected: false},
+        {name: "Wizard",
+        id: 8,
+        selected: false}
+    ];
+
     $scope.init = function () {
         console.log("Hello World");
     };
@@ -31,7 +58,10 @@ app.controller('AdminController', ['AdminService', '$scope', '$http', function (
                 console.log("Adding Spell");
                 console.log($scope.spell);
 
-                AdminService.addSpell($scope.spell)
+                var classes = $scope.classes.filter((x) => x.selected).map(y => y.id);
+                console.log("Classes:", classes);
+
+                AdminService.addSpell($scope.spell, classes)
                     .then(function (response) {
                         console.log("Response:", response.data);
                     })
@@ -64,5 +94,10 @@ app.controller('AdminController', ['AdminService', '$scope', '$http', function (
             .catch(function (error) {
                 console.error(error.data);
             });
+    };
+
+    $scope.showClasses = function () {
+        var classes = $scope.classes.filter((x) => x.selected).map(y => y.id);
+        console.log("Classes:", classes);
     };
 }]);
