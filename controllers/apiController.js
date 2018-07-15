@@ -67,17 +67,21 @@ function addSpell(req, res) {
             console.log("Adding spell:", spell);
             console.log("SQL Text", qtext);
             console.log("Classes", classes);
-            res.status(200).send(qtext);
+            //res.status(200).send(qtext);
             
             //Query Database
-            // pool.query(qtext, function (err, result) {
+            console.log("Attempting to query DB");
+            pool.query(qtext, function (err, result) {
 
-            //     if (err) { res.status(500).json(err); }
+                if (err) { 
+                    console.log("ERROR:", err);
+                    res.status(500).json(err);
+                }
         
-            //     console.log("Successfully added spell:", result);
-            //     res.status(200).json({success: true});
+                console.log("Successfully added spell:", result);
+                res.status(200).json({success: true});
         
-            // });
+            });
 
         } else {
             console.log("addSpell(): Invalid Spell");
