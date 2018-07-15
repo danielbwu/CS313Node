@@ -54,7 +54,9 @@ function addSpell(req, res) {
                 } else {
                     console.log("Successfully added spell:", spell.name);
                     console.log(result);
-                    //var lastInsertId = result.rows[0].id;
+                    var lastInsertId = result.rows[0].id;
+                    console.log("Insert ID:", lastInsertId);
+                    linkClasses(lastInsertId, classes);
                     res.status(200).json(result);
                 }
             });
@@ -67,7 +69,14 @@ function addSpell(req, res) {
         console.log("addSpell(): Missing body parameters");
         res.status(500).send("Invalid Spell");
     }
-    //res.end();
+}
+
+//Adds class relation to a spell
+function linkClasses(spellId, classes) {
+    for (i = 0; i < classes.length; i++) {
+        let qtext = "INSERT INTO spell_class(spell_id, class_id) VALUES (" + spellId + ", " + classes[i] + ");";
+        console.log("Query:", qtext);
+    }
 }
 
 //Prepares text for DB INSERT
