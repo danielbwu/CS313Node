@@ -63,7 +63,7 @@ app.controller('AdminController', ['AdminService', '$scope', '$http', function (
 
                 AdminService.addSpell($scope.spell, classes)
                     .then(function (response) {
-                        console.log("Response:", response.data);
+                        console.log("Response:", response);
                     })
                     .catch(function (error) {
                         console.error(error);

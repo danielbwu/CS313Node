@@ -52,8 +52,9 @@ function addSpell(req, res) {
                     console.log("ERROR:", err);
                     res.status(500).json(err);
                 } else {
-                    console.log("Successfully added spell:", spell.name, "ID:", result.insertId);
-                    res.status(200).json({ success: true, insertId: result.insertId });
+                    console.log("Successfully added spell:", spell.name, "ID:", result.rows[0].id);
+                    console.log("Result:", result);
+                    res.status(200).json({ success: true, insertId: result.rows[0].id });
                 }
             });
 
