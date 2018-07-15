@@ -7,7 +7,7 @@ const pool = new Pool({connectionString: connectionString});
 
 var session = require('express-session');
 const PORT = process.env.PORT || 5000;
-const bodyParser = require('body-parser');
+var bodyParser = require('body-parser');
 
 
 var apiController = require('./controllers/apiController.js');
@@ -20,11 +20,6 @@ const app = express()
   }))
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
-  .use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'localhost:5000');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    next();
-  })
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
@@ -35,7 +30,8 @@ const app = express()
   .get('/api/spells', apiController.getSpells)
   .get('/api/classes', apiController.getClasses)
   .get('/api/schools', apiController.getSchools)
-  .post('/api/spells/add', verifyAdmin, apiController.addSpell)
+  .post('/api/spells/add', apiController.addSpell)
+  .post('/api/test', postTest)
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 
@@ -51,6 +47,15 @@ function verifyAdmin(req, res, next) {
 
 function adminAddSpell(req, res) {
   res.render('pages/addSpellForm');
+}
+
+//Tests post 
+function postTest(req, res) {
+  //if (req)
+  console.log("Testing POST");
+  console.log("Message:", req.body.text);
+
+  res.json(req.body);
 }
 
 function getRates(req, res) {

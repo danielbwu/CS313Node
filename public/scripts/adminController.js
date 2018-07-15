@@ -21,6 +21,8 @@ app.controller('AdminController', ['AdminService', '$scope', '$http', function (
         console.log("Hello World");
     };
 
+    $scope.testText = "";
+
     //Adds a spell to the db
     $scope.addSpell = function () {
         if (confirm("Are you sure?")) {
@@ -52,4 +54,15 @@ app.controller('AdminController', ['AdminService', '$scope', '$http', function (
         return !($scope.spell.name == null || $scope.spell.name == "" || $scope.spell.level == null
             || $scope.spell.school_id == null || $scope.spell.description == null || $scope.spell.description == "");
     }
+
+    $scope.postTest = function () {
+        console.log("Testing POST:", $scope.testText);
+        AdminService.postTest($scope.testText)
+            .then(function (response) {
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                console.error(error.data);
+            });
+    };
 }]);

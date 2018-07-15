@@ -56,10 +56,12 @@ function addSpell(req, res) {
     console.log("Adding a new spell");
     
     if (req.body.spell) {
-        console.log("Adding spell:", req.body.spell);
-        res.json(req.body.spell);
+        var spell = req.body.spell;
+        console.log("Adding spell:", spell);
+        res.json(spell);
     }
-    res.send("Add spell stub");
+    //res.send("Add spell stub");
+    res.end();
 }
 
 function handleGet(req, res, qtext) {
