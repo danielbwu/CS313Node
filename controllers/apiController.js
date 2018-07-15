@@ -37,7 +37,7 @@ function addSpell(req, res) {
 
             var qtext = "INSERT INTO spell(name, level, school_id, casting_time, target, range, component_v, component_s, component_m, component_desc, ritual, duration, concentration, description) " +
                 "VALUES (" + processText(spell.name) + ", " + spell.level + ", " + spell.school_id + ", " + processText(spell.casting_time) + ", " + processText(spell.target) + ", " + processText(spell.range) + ", " + spell.component_v + ", " +
-                spell.component_s + ", " + spell.component_m + ", " + processText(spell.component_desc) + ", " + spell.ritual + ", " + processText(spell.duration) + ", " + spell.concentration + ", " + processText(spell.description) + ");";
+                spell.component_s + ", " + spell.component_m + ", " + processText(spell.component_desc) + ", " + spell.ritual + ", " + processText(spell.duration) + ", " + spell.concentration + ", " + processText(spell.description) + ") RETURNING id;";
 
             console.log("Adding spell:", spell);
             console.log("SQL Text", qtext);
@@ -54,6 +54,7 @@ function addSpell(req, res) {
                 } else {
                     console.log("Successfully added spell:", spell.name);
                     console.log(result);
+                    //var lastInsertId = result.rows[0].id;
                     res.status(200).json(result);
                 }
             });
