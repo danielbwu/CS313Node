@@ -56,8 +56,8 @@ function addSpell(req, res) {
                     console.log(result);
                     var lastInsertId = result.rows[0].id;
                     console.log("Insert ID:", lastInsertId);
-                    linkClasses(lastInsertId, classes);
-                    res.status(200).json(result);
+                    //linkClasses(lastInsertId, classes);
+                    res.status(200).json(lastInsertId);
                 }
             });
 
@@ -95,6 +95,12 @@ function linkClasses(spellId, classes) {
     }
 }
 
+function linkSpellToClass(req, res) {
+    if (req.body.spellId && req.body.classId) {
+
+    }
+}
+
 //Prepares text for DB INSERT
 function processText(text) {
     if (text == "")
@@ -128,5 +134,6 @@ module.exports = {
     getSpells: getSpells,
     getClasses: getClasses,
     getSchools: getSchools,
-    addSpell: addSpell
+    addSpell: addSpell,
+    linkSpellToClass: linkSpellToClass
 }

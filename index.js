@@ -31,7 +31,8 @@ const app = express()
   .get('/api/spells', apiController.getSpells)
   .get('/api/classes', apiController.getClasses)
   .get('/api/schools', apiController.getSchools)
-  .post('/api/spells/add', apiController.addSpell)
+  .post('/api/spells/add', verifyAdmin, apiController.addSpell)
+  .post('/api/spell/class/link', verifyAdmin, apiController.linkSpellToClass)
   .post('/api/test', postTest)
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
