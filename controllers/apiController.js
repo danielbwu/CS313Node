@@ -8,15 +8,6 @@ function getClasses(req, res) {
     var qtext = "SELECT * FROM class";
 
     handleGet(req, res, qtext);
-    // pool.query(qtext, function(err, result) {
-
-    //   if (err) { throw err; }
-
-    //   console.log("Back from db with result: ", result);
-    //   res.status(200).json(result.rows);	
-
-    // });
-
 }
 
 //Gets schools of magic
@@ -25,14 +16,6 @@ function getSchools(req, res) {
     var qtext = "SELECT * FROM school";
 
     handleGet(req, res, qtext);
-    // pool.query(qtext, function(err, result) {
-
-    //   if (err) { throw err; }
-
-    //   console.log("Back from db with result: ", result);
-    //   res.status(200).json(result.rows);	
-
-    // });
 }
 
 //Gets spells
@@ -41,14 +24,6 @@ function getSpells(req, res) {
     var qtext = "SELECT * FROM spell";
 
     handleGet(req, res, qtext);
-    // pool.query(qtext, function(err, result) {
-
-    //   if (err) { throw err; }
-
-    //   console.log("Back from db with result: ", result);
-    //   res.status(200).json(result.rows);	
-
-    // });
 }
 
 //Adds a spell to the database
@@ -68,19 +43,18 @@ function addSpell(req, res) {
             console.log("SQL Text", qtext);
             console.log("Classes", classes);
             //res.status(200).send(qtext);
-            
+
             //Query Database
             console.log("Attempting to query DB");
             pool.query(qtext, function (err, result) {
 
-                if (err) { 
+                if (err) {
                     console.log("ERROR:", err);
                     res.status(500).json(err);
+                } else {
+                    console.log("Successfully added spell:", spell.name, "ID:", result.insertId);
+                    res.status(200).json({ success: true });
                 }
-        
-                console.log("Successfully added spell:", result);
-                res.status(200).json({success: true});
-        
             });
 
         } else {
@@ -102,6 +76,7 @@ function processText(text) {
         return "'" + text.replace("'", "''") + "'";
 }
 
+//Validates that required values are not null
 function validateSpell(spell) {
 
     return !(spell.name == null || spell.name == "" || spell.level == null
@@ -119,6 +94,8 @@ function handleGet(req, res, qtext) {
 
     });
 }
+
+
 
 module.exports = {
     getSpells: getSpells,
