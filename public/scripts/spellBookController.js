@@ -21,19 +21,20 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
 
     //Gets classes for a specific spell
     $scope.getClassesForSpell = function (spell) {
-        if (false) {
-            console.log("Getting classes for spell:", spell.name);
+        // if (false) {
+        //     console.log("Getting classes for spell:", spell.name);
 
-            SpellBookService.getClassesForSpell(spell.id)
-                .then(function (response) {
-                    console.log("Classes for ", spell.name, response.data);
-                    spell.classes = response.data;
-                })
-                .catch(function (error) {
-                    console.error(error.data);
-                });
-        } else {
-            console.log("Classes already retrieved");
-        }
+        //     SpellBookService.getClassesForSpell(spell.id)
+        //         .then(function (response) {
+        //             console.log("Classes for ", spell.name, response.data);
+        //             spell.classes = response.data;
+        //         })
+        //         .catch(function (error) {
+        //             console.error(error.data);
+        //         });
+        // } else {
+        //     console.log("Classes already retrieved");
+        // }
+        console.log("Stub");
     };
 }]);
