@@ -6,6 +6,9 @@
     <% include ../partials/header.ejs %>
         <script src="/scripts/spellBookService.js"></script>
         <script src="/scripts/spellBookController.js"></script>
+    <style>
+        div.panel-heading { cursor: pointer;};
+    </style>
 </head>
 
 <body ng-app="SpellBook" ng-controller="SpellBookController" ng-init="init()">
