@@ -21,7 +21,7 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
 
     //Gets classes for a specific spell
     $scope.getClassesForSpell = function (spell) {
-        if (!spell.classes) {
+        if (false) {
             console.log("Getting classes for spell:", spell.name);
 
             SpellBookService.getClassesForSpell(spell.id)
