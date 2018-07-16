@@ -20,7 +20,15 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
     };
 
     //Gets classes for a specific spell
-    $scope.getClassesForSpell = function (spellId) {
+    $scope.getClassesForSpell = function (spell) {
         console.log("Getting classes for spell:", spellId);
+
+        SpellBookService.getClassesForSpell(spellId)
+            .then(function (response) {
+                return response.data;
+            })
+            .catch(function (error) {
+                console.error(error.data);
+            });
     };
 }]);
