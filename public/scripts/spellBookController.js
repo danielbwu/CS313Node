@@ -18,4 +18,9 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
                 console.error("Error retrieving spells", error.data);
             })
     };
+
+    //Gets classes for a specific spell
+    $scope.getClassesForSpell = function (spellId) {
+        console.log("Getting classes for spell:", spellId);
+    };
 }]);

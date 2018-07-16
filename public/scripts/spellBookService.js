@@ -19,5 +19,10 @@
         this.getAllClasses = function () {
             return $http.get(baseurl + "classes");
         };
+
+        //Gets classes for a specific spell
+        this.getClassesForSpell = function (spellId) {
+            return $http.get(baseurl + "classes?spellId=" + spellId);
+        };
     });
 })();
