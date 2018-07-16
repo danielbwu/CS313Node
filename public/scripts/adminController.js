@@ -67,6 +67,11 @@ app.controller('AdminController', ['AdminService', '$scope', '$http', function (
                 AdminService.addSpell($scope.spell, classes)
                     .then(function (response) {
                         console.log("Response:", response);
+                        if (response.status == 200) {
+                            alert("Successfully added spell!")
+                        } else {
+                            alert("ERROR adding spell!")
+                        }
                     })
                     .catch(function (error) {
                         console.error(error);
