@@ -56,7 +56,7 @@ function addSpell(req, res) {
                     console.log(result);
                     var lastInsertId = result.rows[0].id;
                     console.log("Insert ID:", lastInsertId);
-                    //linkClasses(lastInsertId, classes);
+                    linkClasses(lastInsertId, classes);
                     res.status(200).json(lastInsertId);
                 }
             });
@@ -95,6 +95,7 @@ function linkClasses(spellId, classes) {
     }
 }
 
+//Creates a single link between a spell and class
 function linkSpellToClass(req, res) {
     console.log("Linking spell to class");
     if (req.body.spellId && req.body.classId) {
@@ -132,7 +133,7 @@ function processText(text) {
     if (text == "")
         return "null";
     else
-        return "'" + text.replace("'", "''") + "'";
+        return "'" + text.replace(/'/, "''") + "'";
 }
 
 //Validates that required values are not null
