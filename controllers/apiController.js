@@ -49,11 +49,35 @@ function getSpells(req, res) {
     }
 }
 
+//Gets name and id of spells
+function getSpellsMin(req, res) {
+
+}
+
 //Get a specific spell by id
 function getSpellById(req, res) {
     let stubText = "Stub: getSpellById()";
     console.log(stubText);
     res.send(stubText);
+
+    if (req.query.spellId) {
+        try {
+            //Parse query for spell id
+            let spellId = parseInt(req.query.spellId);
+            if (spellId == null) {
+                throw new error("Invalid spell id");
+            } else {
+                console.log("Getting details for spell:", spellId);
+                //Query DB
+                var qtext = "SELECT sc.id, sc.class_id, c.name FROM class AS c JOIN spell_class AS sc ON sc.class_id=c.id WHERE sc.spell_id=" + spellId + ";";
+                handleGet(req, res, qtext);
+            }
+        } catch (error) {
+            console.error("Failed to retrieve spell details");
+            console.error(err);
+            res.status(500).send("Failed to retrieve spell details");
+        }
+    }
 }
 
 //Gets classes associated with a specific spell id
@@ -100,8 +124,8 @@ function addSpell(req, res) {
                 spell.component_s + ", " + spell.component_m + ", " + processText(spell.component_desc) + ", " + spell.ritual + ", " + processText(spell.duration) + ", " + spell.concentration + ", " + processText(spell.description) + ") RETURNING id;";
 
             console.log("Adding spell:", spell);
-            console.log("SQL Text", qtext);
-            console.log("Classes", classes);
+            console.log("SQL Text:", qtext);
+            console.log("Classes:", classes);
             //res.status(200).send(qtext);
 
             //Query Database

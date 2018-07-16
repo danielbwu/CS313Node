@@ -24,5 +24,10 @@
         this.getClassesForSpell = function (spellId) {
             return $http.get(baseurl + "classes?spellId=" + spellId);
         };
+
+        //Gets a spell by its id
+        this.getSpellById = function (spellId) {
+            return $http.get(baseurl + "spell?spellId=" + spellId);
+        }
     });
 })();

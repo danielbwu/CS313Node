@@ -1,14 +1,17 @@
 app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', function (SpellBookService, $scope, $http) {
 
     $scope.spells = [];
+    $scope.schools = [];
+    $scope.classes = [];
+    $scope.details = {};
 
     //Initializes data
     $scope.init = function () {
-        $scope.getAllSpells();
+        getAllSpells();
     };
 
     //Gets all spells
-    $scope.getAllSpells = function () {
+    function getAllSpells() {
         SpellBookService.getAllSpells()
             .then(function (response) {
                 console.log("Spells:", response.data);
@@ -16,7 +19,21 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
             })
             .catch(function (error) {
                 console.error("Error retrieving spells", error.data);
-            })
+            });
+    }
+
+    //Gets spell details
+    $scope.getDetails = function (id) {
+        if ($scope.details.id != id) {
+            SpellBookService.getSpellById(id)
+                .then(function (response) {
+                    console.log(response.data);
+                    $scope.details = response.data;
+                })
+                .catch(function (error) {
+
+                });
+        }
     };
 
     //Gets classes for a specific spell
