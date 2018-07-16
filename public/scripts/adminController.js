@@ -56,6 +56,9 @@ app.controller('AdminController', ['AdminService', '$scope', '$http', function (
             
             if ($scope.val_spell()) {
                 console.log("Adding Spell");
+                if (!$scope.spell.component_m) {
+                    $scope.spell.component_desc = "";
+                }
                 console.log($scope.spell);
 
                 var classes = $scope.classes.filter((x) => x.selected).map(y => y.id);
