@@ -23,7 +23,7 @@
                     <div class="panel panel-default" ng-repeat="s in spells">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{s.id}}">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{s.id}}" ng-click="getClassesForSpells(s)">
                                     {{s.name}}
                                 </a>
                             </h4>
@@ -33,7 +33,7 @@
                             </div>
                             <div class="panel-footer">
                                 <b>Classes: </b>
-                                <span ng-repeat="c in getClassesForSpell(s.id)">{{c.name}}</span>
+                                <span ng-repeat="c in s.classes">{{c.name}}</span>
                             </div>
                         </div>
                     </div>
