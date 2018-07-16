@@ -21,9 +21,9 @@
                 <!--List of Spells-->
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default" ng-repeat="s in spells">
-                        <div class="panel-heading">
+                        <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse{{s.id}}">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{s.id}}">
+                                <a >
                                     {{s.name}}
                                 </a>
                             </h4>
