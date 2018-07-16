@@ -133,7 +133,7 @@ function processText(text) {
     if (text == "")
         return "null";
     else
-        return "'" + text.replace(/'/, "''") + "'";
+        return "'" + text.replace(/'/g, "''") + "'";
 }
 
 //Validates that required values are not null
