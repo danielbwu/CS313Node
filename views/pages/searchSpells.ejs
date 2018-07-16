@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>List of Spells</title>
     <% include ../partials/header.ejs %>
-    <script src="/scripts/spellBookService.js"></script>
-    <script src="/scripts/spellBookController.js"></script>
+        <script src="/scripts/spellBookService.js"></script>
+        <script src="/scripts/spellBookController.js"></script>
 </head>
+
 <body ng-app="SpellBook" ng-controller="SpellBookController" ng-init="init()">
     <div class="container">
         <!--Search controls-->
@@ -16,9 +18,24 @@
         <div class="container">
             <div class="container col-md-8">
                 <!--List of Spells-->
-
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default" ng-repeat="s in spells">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                    {{s.name}}
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">{{s.description}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>

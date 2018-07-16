@@ -67,7 +67,7 @@ function addSpell(req, res) {
         }
     } else {
         console.log("addSpell(): Missing body parameters");
-        res.status(500).send("Invalid Spell");
+        res.status(400).send("Invalid Spell");
     }
 }
 
@@ -81,14 +81,14 @@ function linkClasses(spellId, classes) {
         try {
             console.log("Attempting to link spell '", spellId, "' to class '", classes[i], "'");
             pool.query(qtext, function (err, result) {
-                if (err) { 
-                    console.log
+                if (err) {
+                    console.log(err);
                     throw err;
                 } else {
-                    console.log("Success")
+                    console.log("Success");
                 }
             });
-        } catch(error) {
+        } catch (error) {
             console.error("Failed to create link");
             console.error(error);
         }
@@ -96,8 +96,34 @@ function linkClasses(spellId, classes) {
 }
 
 function linkSpellToClass(req, res) {
+    console.log("Linking spell to class");
     if (req.body.spellId && req.body.classId) {
+        let spellId = req.body.spellId;
+        let classId = req.body.classId;
+        let qtext = "INSERT INTO spell_class(spell_id, class_id) VALUES (" + spellId + ", " + classId + ") RETURNING id;";
+        console.log("Query:", qtext);
 
+        //Query DB
+        try {
+            console.log("Attempting to link spell '", spellId, "' to class '", classId, "'");
+            pool.query(qtext, function (err, result) {
+                if (err) {
+                    console.log(err);
+                    throw err;
+                } else {
+                    console.log("Success");
+                    var lastInsertId = result.rows[0].id;
+                    console.log("Insert ID:", lastInsertId);
+                    res.status(200).json(lastInsertId);
+                }
+            });
+        } catch (error) {
+            console.error("Failed to create link");
+            console.error(error);
+        }
+    } else {
+        console.log("linkSpellToClass(): Missing body parameters");
+        res.status(400).send("Bad request");
     }
 }
 
