@@ -5,9 +5,20 @@ const pool = new Pool({ connectionString: connectionString });
 //Gets player classes
 function getClasses(req, res) {
     console.log("Retrieving classes");
-    var qtext = "SELECT * FROM class";
 
-    handleGet(req, res, qtext);
+    try {
+        //If spell is specified
+        if (req.query.spellId) {
+            getClassesForSpell(req, res);
+        } else { //Get all classes
+            var qtext = "SELECT * FROM class";
+            handleGet(req, res, qtext);
+        }
+    } catch (error) {
+        console.error("Failed to retrieve classes");
+        console.error(err);
+        res.status(500).send("Failed to retrieve classes");
+    }
 }
 
 //Gets schools of magic
@@ -15,7 +26,13 @@ function getSchools(req, res) {
     console.log("Retrieving schools");
     var qtext = "SELECT * FROM school";
 
-    handleGet(req, res, qtext);
+    try {
+        handleGet(req, res, qtext);
+    } catch (error) {
+        console.error("Failed to retrieve schools");
+        console.error(err);
+        res.status(500).send("Failed to retrieve schools");
+    }
 }
 
 //Gets spells
@@ -23,7 +40,50 @@ function getSpells(req, res) {
     console.log("Retrieving spells");
     var qtext = "SELECT * FROM spell";
 
-    handleGet(req, res, qtext);
+    try {
+        handleGet(req, res, qtext);
+    } catch (error) {
+        console.error("Failed to retrieve spells");
+        console.error(err);
+        res.status(500).send("Failed to retrieve spells");
+    }
+}
+
+//Get a specific spell by id
+function getSpellById(req, res) {
+    let stubText = "Stub: getSpellById()";
+    console.log(stubText);
+    res.send(stubText);
+}
+
+//Gets classes associated with a specific spell id
+function getClassesForSpell(req, res) {
+    if (req.query.spellId) {
+        //Parse query for spell id
+        let spellId = parseInt(req.query.spellId);
+        if (spellId == null) {
+            throw new error("Invalid spell id");
+        } else {
+            console.log("Getting classes for spell:", spellId);
+            //Query DB
+            var qtext = "SELECT sc.id, sc.class_id, c.name FROM class AS c JOIN spell_class AS sc ON sc.class_id=c.id WHERE sc.spell_id=" + spellId + ";";
+            handleGet(req, res, qtext);
+        }
+    }
+}
+
+//Gets spells associated with a specific class id
+function getSpellsForClass(req, res) {
+    var stubText = "Stub: getSpellsForClass()";
+    console.log(stubText);
+    res.send(stubText);
+}
+
+//Gets spells associated with a specific class id
+function getSpellsForSchool(req, res) {
+    var stubText = "Stub: getSpellsForSchool()";
+    console.log(stubText);
+    res.send(stubText);
 }
 
 //Adds a spell to the database
@@ -147,8 +207,10 @@ function validateSpell(spell) {
 function handleGet(req, res, qtext) {
     pool.query(qtext, function (err, result) {
 
-        if (err) { res.status(500).json(err); }
+        //Throw error
+        if (err) { throw err; }
 
+        //Success
         console.log("Back from db with result: ", result);
         res.status(200).json(result.rows);
 
@@ -162,5 +224,9 @@ module.exports = {
     getClasses: getClasses,
     getSchools: getSchools,
     addSpell: addSpell,
-    linkSpellToClass: linkSpellToClass
+    linkSpellToClass: linkSpellToClass,
+    getSpellById: getSpellById,
+    getClassesForSpell: getClassesForSpell,
+    getSpellsForClass: getSpellsForClass,
+    getSpellsForSchool: getSpellsForSchool
 }

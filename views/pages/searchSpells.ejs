@@ -9,14 +9,15 @@
 </head>
 
 <body ng-app="SpellBook" ng-controller="SpellBookController" ng-init="init()">
+    <!--Search controls-->
+    <div class="page-header">
+        <h1>Search Spells</h1>
+    </div>
     <div class="container">
-        <!--Search controls-->
-        <div class="page-header">
-            <h1>Search Spells</h1>
-        </div>
+
         <!--Main content-->
         <div class="container">
-            <div class="container col-md-8">
+            <div class="container col-md-8 col-lg-8">
                 <!--List of Spells-->
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default" ng-repeat="s in spells">

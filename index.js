@@ -41,6 +41,7 @@ const app = express()
 function searchSpells(req, res) {
   res.render('pages/searchSpells');
 }
+
 //Verifies user login
 function verifyLogin(req, res, next) {
   console.log("Verifying login...");
