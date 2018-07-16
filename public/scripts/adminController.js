@@ -93,7 +93,7 @@ app.controller('AdminController', ['AdminService', '$scope', '$http', function (
         AdminService.postTest($scope.testText)
             .then(function (response) {
                 console.log(response.data);
-                if (response.status == 200) {
+                if (response.data.status == 200) {
                     alert("Successfully added spell!")
                 } else {
                     alert("ERROR adding spell!")
