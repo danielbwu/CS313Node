@@ -38,7 +38,7 @@ const app = express()
   .post('/api/test', postTest)
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-
+//Hello
 //View all spells
 function searchSpells(req, res) {
   res.render('pages/searchSpells');
