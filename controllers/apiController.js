@@ -96,6 +96,7 @@ function getSpellById(req, res) {
 
 //Gets classes associated with a specific spell id
 // Called by getClasses
+// Route: /api/classes?spellId={id}
 function getClassesForSpell(req, res) {
     if (req.query.spellId) {
         //Parse query for spell id
