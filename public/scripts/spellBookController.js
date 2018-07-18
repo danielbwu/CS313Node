@@ -31,7 +31,7 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
                     $scope.details = response.data;
                 })
                 .catch(function (error) {
-
+                    console.error(error.data);
                 });
         }
     };
