@@ -16,7 +16,7 @@
 <body ng-app="SpellBook" ng-controller="SpellBookController" ng-init="init()">
     <% include ../partials/spellbookNav.ejs %>
         <!--Search controls-->
-        <div class="page-header">
+        <div class="container page-header">
 
             <h1>Search Spells</h1>
         </div>
@@ -26,8 +26,9 @@
             <div class="container">
                 <div class="container col-lg-8 col-md-8 col-sm-12 col-xs-12">
                     <!--List of Spells-->
-                    <!--Cantrips-->
-                    <h2>Cantrips</h2>
+                    <div class="form-group">
+                        <input type="text" ng-model="filterText.$" class="form-control" placeholder="Filter results">
+                    </div>
                     <div class="panel-group" id="accordion">
                         <div class="panel panel-default" ng-repeat="s in spells | filter:filterText" is-open="false">
                             <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse{{s.id}}" ng-click="getDetails(s)">
@@ -39,7 +40,9 @@
                             <div id="collapse{{s.id}}" class="panel-collapse collapse in">
                                 <div class="panel-body">
                                     <div>
-                                        <h5><i>{{level(s.level)}} {{school(s.school_id)}}</i></h5>
+                                        <h5>
+                                            <i>{{level(s.level)}} {{school(s.school_id)}}</i>
+                                        </h5>
                                         <table class="table table-sm table-responsive">
                                             <thead>
                                                 <tr>
@@ -52,7 +55,9 @@
                                             <tbody>
                                                 <tr>
                                                     <th scope="row">Casting Time</th>
-                                                    <td>{{s.casting_time}}</td>
+                                                    <td>{{s.casting_time}}
+                                                        <span ng-if="s.ritual"> (Ritual)</span>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Range</th>
@@ -69,9 +74,10 @@
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Duration</th>
-                                                    <td>{{s.duration}}</td>
+                                                    <td>
+                                                        <span ng-if="s.concentration">Conc. up to</span> {{s.duration}}</td>
                                                 </tr>
-                                                
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -81,7 +87,8 @@
                                 </div>
                                 <div class="panel-footer">
                                     <b>Classes: </b>
-                                    <span ng-repeat="c in s.classes">{{c.name}}
+                                    <span ng-repeat="c in s.classes">
+                                        {{c.name}}
                                         <span ng-if="!$last">, </span>
                                     </span>
                                 </div>

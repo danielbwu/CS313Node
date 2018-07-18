@@ -3,7 +3,13 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
     $scope.spells = [];
     $scope.schools = [];
     $scope.classes = [];
-    $scope.details = { id: null };
+    $scope.filterText = {
+        name: "",
+        // level: null,
+        // school_id: null,
+        // concentration: null,
+        // ritual: null,
+    }
 
     const levels = [
         "cantrip",
@@ -38,7 +44,7 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
         SpellBookService.getAllSpells()
             .then(function (response) {
                 console.log("Spells:", response.data);
-                $scope.spells = response.data;
+                $scope.spells = response.data.sort(compare);
             })
             .catch(function (error) {
                 console.error("Error retrieving spells", error.data);
@@ -118,5 +124,13 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
     //Translates school_id to text
     $scope.school = function (id) {
         return schools[id];
+    }
+
+    //Sorting function
+    function compare(a, b) {
+        if (a.level > b.level) { return 1; }
+        if (a.level < b.level) { return -1; }
+        if (a.name > b.name)   { return 1; }
+        if (a.name < b.name)   { return -1; }
     }
 }]);
