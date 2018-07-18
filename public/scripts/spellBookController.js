@@ -56,6 +56,7 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
             .then(function (response) {
                 console.log("Classes for ", spell.name, response.data);
                 spell.classes = response.data;
+                console.log(spell);
             })
             .catch(function (error) {
                 console.error(error.data);
