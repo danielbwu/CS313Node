@@ -3,6 +3,7 @@ const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({ connectionString: connectionString });
 
 //Gets player classes
+// Route: /api/classes
 function getClasses(req, res) {
     console.log("Retrieving classes");
 
@@ -22,6 +23,7 @@ function getClasses(req, res) {
 }
 
 //Gets schools of magic
+// Route: /api/schools
 function getSchools(req, res) {
     console.log("Retrieving schools");
     var qtext = "SELECT * FROM school";
@@ -36,6 +38,7 @@ function getSchools(req, res) {
 }
 
 //Gets spells
+// Route: /api/spells/all
 function getSpells(req, res) {
     console.log("Retrieving spells");
     var qtext = "SELECT * FROM spell";
@@ -50,6 +53,7 @@ function getSpells(req, res) {
 }
 
 //Gets names and ids of spells
+// Route: /api/spells
 function getSpellsMin(req, res) {
     console.log("Retrieving spells (min)");
     var qtext = "SELECT id, name FROM spell";
@@ -64,11 +68,9 @@ function getSpellsMin(req, res) {
 }
 
 //Get a specific spell by id
+// Route: /api/spell?spellId={spellId}
 function getSpellById(req, res) {
-    // let stubText = "Stub: getSpellById()";
-    // console.log(stubText);
-    // res.send(stubText);
-
+    console.log("api called: getSpellById()")
     if (req.query.spellId) {
         try {
             //Parse query for spell id
@@ -86,10 +88,14 @@ function getSpellById(req, res) {
             console.error(err);
             res.status(500).send("Failed to retrieve spell details");
         }
+    } else {
+        console.log("getSpellById(): Missing query parameter");
+        res.status(400).send("Spell ID not specified");
     }
 }
 
 //Gets classes associated with a specific spell id
+// Called by getClasses
 function getClassesForSpell(req, res) {
     if (req.query.spellId) {
         //Parse query for spell id
@@ -102,6 +108,9 @@ function getClassesForSpell(req, res) {
             var qtext = "SELECT sc.id, sc.class_id, c.name FROM class AS c JOIN spell_class AS sc ON sc.class_id=c.id WHERE sc.spell_id=" + spellId + ";";
             handleGet(req, res, qtext);
         }
+    } else {
+        console.log("getClassesForSpell(): Missing query parameter");
+        res.status(400).send("Spell ID not specified");
     }
 }
 
@@ -302,7 +311,6 @@ module.exports = {
     addSpell: addSpell,
     linkSpellToClass: linkSpellToClass,
     getSpellById: getSpellById,
-    getClassesForSpell: getClassesForSpell,
     getSpellsForClass: getSpellsForClass,
     getSpellsForSchool: getSpellsForSchool,
     createUser: createUser,
