@@ -32,8 +32,11 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
                     .then(function (response) {
                         console.log(response.data[0]);
                         $scope.details = response.data[0];
-                        s = response.data[0];
+                        for (var x in response.data[0]) {
+                            s[x] = response.data[0][x];
+                        }
                         
+                        console.log("Updated details:", s);
                     })
                     .catch(function (error) {
                         console.error(error.data);
