@@ -14,9 +14,10 @@
 </head>
 
 <body ng-app="SpellBook" ng-controller="SpellBookController" ng-init="init()">
-    <% include ../partials/spellbookNav.ejs %>
+    
     <!--Search controls-->
     <div class="page-header">
+        <% include ../partials/spellbookNav.ejs %>
         <h1>Search Spells</h1>
     </div>
     <div class="container">
@@ -35,13 +36,17 @@
                             </h4>
                         </div>
                         <div id="collapse{{s.id}}" class="panel-collapse collapse in">
-                            <div class="panel-body" id="desc{{s.id}}">
+                            <div class="panel-body">
+                                <div>
 
+                                </div>
+                                <div id="desc{{s.id}}">
+
+                                </div>
                             </div>
                             <div class="panel-footer">
                                 <b>Classes: </b>
-                                <span ng-repeat="c in s.classes">{{c.name}}
-                                    <span ng-if="!$last">, </span>
+                                <span ng-repeat="c in s.classes">{{c.name}}<span ng-if="!$last">, </span>
                                 </span>
                             </div>
                         </div>
