@@ -78,7 +78,7 @@ function getSpellById(req, res) {
             } else {
                 console.log("Getting details for spell:", spellId);
                 //Query DB
-                var qtext = "SELECT sc.id, sc.class_id, c.name FROM class AS c JOIN spell_class AS sc ON sc.class_id=c.id WHERE sc.spell_id=" + spellId + ";";
+                var qtext = "SELECT * FROM spell WHERE id =" + spellId + ";";
                 handleGet(req, res, qtext);
             }
         } catch (error) {
