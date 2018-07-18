@@ -3,7 +3,7 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
     $scope.spells = [];
     $scope.schools = [];
     $scope.classes = [];
-    $scope.details = {};
+    $scope.details = { id: null };
 
     //Initializes data
     $scope.init = function () {
