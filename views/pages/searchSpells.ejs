@@ -23,13 +23,13 @@
             <div class="container col-lg-8 col-md-8 col-sm-8">
                 <!--List of Spells-->
                 <div class="panel-group" id="accordion">
-                    <div class="panel panel-default" ng-repeat="s in spells">
-                        <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse{{s.id}}" ng-click="getDetails(s.id)" aria-expanded="false">
+                    <div class="panel panel-default" ng-repeat="s in spells" is-open="false">
+                        <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse{{s.id}}" ng-click="getDetails(s.id)">
                             <h4 class="panel-title">
                                 {{s.name}}
                             </h4>
                         </div>
-                        <div id="collapse{{s.id}}" class="panel-collapse collapse in" aria-expanded="false">
+                        <div id="collapse{{s.id}}" class="panel-collapse collapse in">
                             <div class="panel-body">{{details.description}}
                             </div>
                             <div class="panel-footer">
