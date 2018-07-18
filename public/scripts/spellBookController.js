@@ -33,6 +33,7 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
                         console.log(response.data[0]);
                         $scope.details = response.data[0];
                         s = response.data[0];
+                        
                     })
                     .catch(function (error) {
                         console.error(error.data);
@@ -63,13 +64,25 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
     };
 
     //Formats text
-    $scope.format = function (text) {
+    $scope.format = function (id, text) {
         // var node = document.createTextNode(text.replace(/\n/g, document.createElement("br")));
         // var span = document.createElement("span");
         // span.appendChild(node);
         // console.log("Span:", span);
         // return span;
 
-        return document.createElement("br");
+        var split = text.split("\n");
+        var span = document.createElement("span");
+
+        for (i = 0; i < res.length; i++) {
+            let node = document.createTextNode(split[i]);
+            let br = document.createElement("br");
+            span.appendChild(node);
+            span.appendChild(br);
+        }
+
+        var element = document.getElementById("desc" + id);
+        //var child = document.getElementById("demo");
+        element.appendChild(span);
     };
 }]);
