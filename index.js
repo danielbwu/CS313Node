@@ -9,6 +9,8 @@ var session = require('express-session');
 const PORT = process.env.PORT || 5000;
 var bodyParser = require('body-parser');
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 var apiController = require('./controllers/apiController.js');
 const app = express()
@@ -22,11 +24,15 @@ const app = express()
   .use(bodyParser.urlencoded({ extended: true }))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
+  .get('/', home)
+  .get('/SpellBook/Spells', home)
   .get('/hello', (req, res) => res.send('Hello World'))
   .get('/rates', (req, res) => res.render('pages/rates'))
   .get('/getRates', getRates)
   .get('/Spells', searchSpells)
+  .get('/login', login)
+  .get('/logout', logout)
+  .get('/signup', signup)
   .get('/Admin/AddSpell', verifyAdmin, adminAddSpell)
   .get('/api/spell', apiController.getSpellById)
   .get('/api/spells/all', apiController.getSpells)
@@ -35,10 +41,18 @@ const app = express()
   .get('/api/schools', apiController.getSchools)
   .post('/api/spells/add', verifyAdmin, apiController.addSpell)
   .post('/api/spell/class/link', verifyAdmin, apiController.linkSpellToClass)
-  .post('/api/test', postTest)
+  .post('/api/users/create', apiController.createUser)
+  .post('/api/users/login', apiController.login)
+  .post('/api/users/logout', apiController.logout)
+  .post('/api/users/delete', verifyUserDelete, apiController.deleteUser)
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-//Hello
+
+//Redirects to home page
+function home(req, res) {
+  res.writeHead(301, {Location: "/Spells"});
+  res.end();
+}
 //View all spells
 function searchSpells(req, res) {
   res.render('pages/searchSpells');
@@ -59,6 +73,27 @@ function verifyAdmin(req, res, next) {
 //Directs to admin spell add form
 function adminAddSpell(req, res) {
   res.render('pages/addSpellForm');
+}
+
+//Directs to login page
+function login(req, res) {
+  res.render('pages/login');
+}
+
+//Logs a user out
+function logout(req, res) {
+  res.send("Log out stub");
+}
+
+//Directs to signup page
+function signup(req, res) {
+  res.render('pages/signup');
+}
+
+//Middleware for deleteing user
+function verifyUserDelete(req, res, next) {
+  console.log("Verifying User Delete");
+  next();
 }
 
 //Tests post 
