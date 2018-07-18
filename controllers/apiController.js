@@ -52,11 +52,11 @@ function getSpells(req, res) {
     }
 }
 
-//Gets names and ids of spells
+//Gets names, ids and levels of spells
 // Route: /api/spells
 function getSpellsMin(req, res) {
     console.log("Retrieving spells (min)");
-    var qtext = "SELECT id, name FROM spell";
+    var qtext = "SELECT id, name, level FROM spell";
 
     try {
         handleGet(req, res, qtext);

@@ -20,11 +20,11 @@
 
             <h1>Search Spells</h1>
         </div>
-        <div class="container">
+        <div class="container container-fluid">
 
             <!--Main content-->
             <div class="container">
-                <div class="container col-lg-8 col-md-8 col-sm-8">
+                <div class="container col-lg-8 col-md-8 col-sm-12 col-xs-12">
                     <!--List of Spells-->
                     <!--Cantrips-->
                     <h2>Cantrips</h2>
@@ -33,15 +33,20 @@
                             <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse{{s.id}}" ng-click="getDetails(s)">
                                 <h4 class="panel-title">
                                     {{s.name}}
+                                    <span class="pull-right">{{level(s.level)}}</span>
                                 </h4>
                             </div>
                             <div id="collapse{{s.id}}" class="panel-collapse collapse in">
                                 <div class="panel-body">
                                     <div>
+                                        <h5><i>{{level(s.level)}} {{school(s.school_id)}}</i></h5>
                                         <table class="table table-sm table-responsive">
                                             <thead>
                                                 <tr>
-                                                    <th scope="row" colspan="2">{{s.level}}-Level {{s.school_id}}</th>
+                                                    <th scope="row" colspan="1" class="col-sm-1">
+                                                        <!-- <i>{{level(s.level)}} {{school(s.school_id)}}</i> -->
+                                                    </th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>

@@ -5,6 +5,29 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
     $scope.classes = [];
     $scope.details = { id: null };
 
+    const levels = [
+        "cantrip",
+        "1st-level",
+        "2nd-level",
+        "3rd-level",
+        "4th-level",
+        "5th-level",
+        "6th-level",
+        "7th-level",
+        "8th-level",
+        "9th-level"];
+
+    const schools = [
+        "null",
+        "abjuration",
+        "conjuration",
+        "divination",
+        "enchantment",
+        "evocation",
+        "illusion",
+        "necromancy",
+        "transmutation"];
+
     //Initializes data
     $scope.init = function () {
         getAllSpells();
@@ -86,4 +109,14 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
         var element = document.getElementById("desc" + id);
         element.appendChild(span);
     };
+
+    //Translates level number to text
+    $scope.level = function (level) {
+        return levels[level];
+    };
+
+    //Translates school_id to text
+    $scope.school = function (id) {
+        return schools[id];
+    }
 }]);
