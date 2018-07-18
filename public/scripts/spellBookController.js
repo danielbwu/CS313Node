@@ -26,17 +26,17 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
     $scope.getDetails = function (s) {
         var id = s.id;
         if (id) {
-            if ($scope.details.id == null || $scope.details.id != id) {
+            if (s.description == null) {
                 console.log("Getting details");
                 SpellBookService.getSpellById(id)
                     .then(function (response) {
                         console.log(response.data[0]);
-                        $scope.details = response.data[0];
+                        //$scope.details = response.data[0];
                         for (var x in response.data[0]) {
                             s[x] = response.data[0][x];
                         }
-                        
-                        console.log("Updated details:", s);
+                        $scope.format(s.id, s.description);
+                        //console.log("Updated details:", s);
                     })
                     .catch(function (error) {
                         console.error(error.data);
@@ -77,15 +77,16 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
         var split = text.split("\n");
         var span = document.createElement("span");
 
-        for (i = 0; i < res.length; i++) {
+        for (i = 0; i < split.length; i++) {
             let node = document.createTextNode(split[i]);
             let br = document.createElement("br");
             span.appendChild(node);
-            span.appendChild(br);
+
+            if (i < split.length - 1)
+                span.appendChild(br);
         }
 
         var element = document.getElementById("desc" + id);
-        //var child = document.getElementById("demo");
         element.appendChild(span);
     };
 }]);
