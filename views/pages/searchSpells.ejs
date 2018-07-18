@@ -34,8 +34,8 @@
                                 
                             </div>
                             <div class="panel-footer">
-                                <b>Classes: </b>{{s.classes}}
-                                <span ng-repeat="c in s.classes">{{c.name}}</span>
+                                <b>Classes: </b>
+                                <span ng-repeat="c in s.classes">{{c.name}}<span ng-if="!$last">, </span></span>
                             </div>
                         </div>
                     </div>
