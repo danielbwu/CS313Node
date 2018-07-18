@@ -29,7 +29,7 @@
                 <!--Cantrips-->
                 <h2>Cantrips</h2>
                 <div class="panel-group" id="accordion">
-                    <div class="panel panel-default" ng-repeat="s in spells |filter: {level: 0}" is-open="false">
+                    <div class="panel panel-default" ng-repeat="s in spells | filter: {level: 0}" is-open="false">
                         <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse{{s.id}}" ng-click="getDetails(s)">
                             <h4 class="panel-title">
                                 {{s.name}}
