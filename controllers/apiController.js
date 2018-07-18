@@ -6,7 +6,7 @@ const pool = new Pool({ connectionString: connectionString });
 // Route: /api/classes
 function getClasses(req, res) {
     console.log("Retrieving classes");
-    res.setHeader('Access-Control-Allow-Origin', '*');
+
     try {
         //If spell is specified
         if (req.query.spellId) {
@@ -26,7 +26,6 @@ function getClasses(req, res) {
 // Route: /api/schools
 function getSchools(req, res) {
     console.log("Retrieving schools");
-    res.setHeader('Access-Control-Allow-Origin', '*');
     var qtext = "SELECT * FROM school";
 
     try {
@@ -42,7 +41,6 @@ function getSchools(req, res) {
 // Route: /api/spells/all
 function getSpells(req, res) {
     console.log("Retrieving spells");
-    res.setHeader('Access-Control-Allow-Origin', '*');
     var qtext = "SELECT * FROM spell";
 
     try {
@@ -58,7 +56,6 @@ function getSpells(req, res) {
 // Route: /api/spells
 function getSpellsMin(req, res) {
     console.log("Retrieving spells (min)");
-    res.setHeader('Access-Control-Allow-Origin', '*');
     var qtext = "SELECT id, name FROM spell";
 
     try {
@@ -74,7 +71,6 @@ function getSpellsMin(req, res) {
 // Route: /api/spell?spellId={spellId}
 function getSpellById(req, res) {
     console.log("api called: getSpellById()")
-    res.setHeader('Access-Control-Allow-Origin', '*');
     if (req.query.spellId) {
         try {
             //Parse query for spell id
@@ -102,7 +98,6 @@ function getSpellById(req, res) {
 // Called by getClasses
 // Route: /api/classes?spellId={id}
 function getClassesForSpell(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
     if (req.query.spellId) {
         //Parse query for spell id
         let spellId = parseInt(req.query.spellId);
@@ -253,6 +248,7 @@ function validateSpell(spell) {
 
 //Template for get request
 function handleGet(req, res, qtext) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     pool.query(qtext, function (err, result) {
 
         //Throw error
