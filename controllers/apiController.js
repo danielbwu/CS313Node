@@ -49,9 +49,18 @@ function getSpells(req, res) {
     }
 }
 
-//Gets name and id of spells
+//Gets names and ids of spells
 function getSpellsMin(req, res) {
+    console.log("Retrieving spells (min)");
+    var qtext = "SELECT id, name FROM spell";
 
+    try {
+        handleGet(req, res, qtext);
+    } catch (error) {
+        console.error("Failed to retrieve spells");
+        console.error(err);
+        res.status(500).send("Failed to retrieve spells");
+    }
 }
 
 //Get a specific spell by id
@@ -241,7 +250,50 @@ function handleGet(req, res, qtext) {
     });
 }
 
+/*************************************** 
+* Account Stuff
+****************************************/
+//Creates a new user account
+function createUser(req, res) {
+    var stubText = "Stub: createUser()";
+    console.log(stubText);
+    res.send(stubText);
+}
 
+//Logs a user in
+function login(req, res) {
+    var stubText = "Stub: login())";
+    console.log(stubText);
+    res.send(stubText);
+}
+
+//Logs a user out
+function logout(req, res) {
+    var stubText = "Stub: logout())";
+    console.log(stubText);
+    res.send(stubText);
+}
+
+//Deletes a user account
+function deleteUser(req, res) {
+    var stubText = "Stub: deleteUser()";
+    console.log(stubText);
+    res.send(stubText);
+}
+
+//Adds a spell to a user's saved list
+function addSpellToAccount(req, res) {
+    var stubText = "Stub: addSpellToAccount()";
+    console.log(stubText);
+    res.send(stubText);
+}
+
+//Adds a spell to a user's saved list
+function removeSpellFromAccount(req, res) {
+    var stubText = "Stub: removeSpellFromAccount()";
+    console.log(stubText);
+    res.send(stubText);
+}
 
 module.exports = {
     getSpells: getSpells,
@@ -252,5 +304,12 @@ module.exports = {
     getSpellById: getSpellById,
     getClassesForSpell: getClassesForSpell,
     getSpellsForClass: getSpellsForClass,
-    getSpellsForSchool: getSpellsForSchool
+    getSpellsForSchool: getSpellsForSchool,
+    createUser: createUser,
+    login: login,
+    logout: logout,
+    deleteUser: deleteUser,
+    addSpellToAccount: addSpellToAccount,
+    removeSpellFromAccount: removeSpellFromAccount,
+    getSpellsMin: getSpellsMin
 }
