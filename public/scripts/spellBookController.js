@@ -23,10 +23,8 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
     }
 
     //Gets spell details
-    $scope.getDetails = function (id) {
-        // console.log("Spell clicked!");
-        // console.log("Spell id:", id);
-        // console.log("Scope details id:", $scope.details.id);
+    $scope.getDetails = function (s) {
+        var id = s.id;
         if (id) {
             if ($scope.details.id == null || $scope.details.id != id) {
                 console.log("Getting details");
@@ -34,6 +32,7 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
                     .then(function (response) {
                         console.log(response.data[0]);
                         $scope.details = response.data[0];
+                        s = response.data[0];
                     })
                     .catch(function (error) {
                         console.error(error.data);
@@ -65,10 +64,12 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
 
     //Formats text
     $scope.format = function (text) {
-        var node = document.createTextNode(text.replace(/\n/g, document.createElement("br")));
-        var span = document.createElement("span");
-        span.appendChild(node);
-        console.log("Span:", span);
-        return span;
+        // var node = document.createTextNode(text.replace(/\n/g, document.createElement("br")));
+        // var span = document.createElement("span");
+        // span.appendChild(node);
+        // console.log("Span:", span);
+        // return span;
+
+        return document.createElement("br");
     };
 }]);
