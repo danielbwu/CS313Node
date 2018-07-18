@@ -27,7 +27,7 @@
 
         //Gets a spell by its id
         this.getSpellById = function (spellId) {
-            return $http.get(baseurl + "spell?spellId=" + spellId);
+            return $http.get(baseurl + "spell?spellId=" + spellId.toString());
         }
     });
 })();

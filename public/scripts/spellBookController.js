@@ -26,16 +26,20 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
     $scope.getDetails = function (id) {
         console.log("Spell clicked!");
         console.log($scope.details.id);
-        if ($scope.details.id == null || $scope.details.id != id) {
-            console.log("Getting details");
-            SpellBookService.getSpellById(id)
-                .then(function (response) {
-                    console.log(response.data);
-                    $scope.details = response.data;
-                })
-                .catch(function (error) {
-                    console.error(error.data);
-                });
+        if (id) {
+            if ($scope.details.id == null || $scope.details.id != id) {
+                console.log("Getting details");
+                SpellBookService.getSpellById(id)
+                    .then(function (response) {
+                        console.log(response.data);
+                        $scope.details = response.data;
+                    })
+                    .catch(function (error) {
+                        console.error(error.data);
+                    });
+            }
+        } else {
+            console.error("No ID!");
         }
     };
 
