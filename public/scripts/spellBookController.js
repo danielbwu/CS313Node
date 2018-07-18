@@ -32,8 +32,8 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
                 console.log("Getting details");
                 SpellBookService.getSpellById(id)
                     .then(function (response) {
-                        console.log(response.data);
-                        $scope.details = response.data;
+                        console.log(response.data[0]);
+                        $scope.details = response.data[0];
                     })
                     .catch(function (error) {
                         console.error(error.data);
