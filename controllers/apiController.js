@@ -65,9 +65,9 @@ function getSpellsMin(req, res) {
 
 //Get a specific spell by id
 function getSpellById(req, res) {
-    let stubText = "Stub: getSpellById()";
-    console.log(stubText);
-    res.send(stubText);
+    // let stubText = "Stub: getSpellById()";
+    // console.log(stubText);
+    // res.send(stubText);
 
     if (req.query.spellId) {
         try {

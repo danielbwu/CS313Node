@@ -26,6 +26,7 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
     $scope.getDetails = function (id) {
         console.log("Spell clicked!");
         if ($scope.details.id != id) {
+            console.log("Getting details");
             SpellBookService.getSpellById(id)
                 .then(function (response) {
                     console.log(response.data);
