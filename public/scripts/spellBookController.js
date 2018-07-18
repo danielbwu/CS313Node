@@ -68,7 +68,7 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
         var node = document.createTextNode(text.replace(/\n/g, document.createElement("br")));
         var span = document.createElement("span");
         span.appendChild(node);
-
+        console.log("Span:", span);
         return span;
     };
 }]);
