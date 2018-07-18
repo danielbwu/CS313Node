@@ -65,6 +65,6 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
 
     //Formats text
     $scope.format = function (text) {
-        return text.replace(/\n/g, document.createElement("p"));
+        return text.replace(/\n/g, document.createElement("br"));
     };
 }]);
