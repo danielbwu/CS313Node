@@ -36,6 +36,7 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
                             s[x] = response.data[0][x];
                         }
                         $scope.format(s.id, s.description);
+                        $scope.getClassesForSpell(s);
                         //console.log("Updated details:", s);
                     })
                     .catch(function (error) {
