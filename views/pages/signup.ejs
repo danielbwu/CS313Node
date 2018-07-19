@@ -32,24 +32,37 @@
                 font-weight: bold;
             }
         </style>
+        <script type="text/javascript">
+            function confirmMatch() {
+                let p1 = document.getElementById("p1").value;
+                let p2 = document.getElementById("p2").value;
+
+                if (p1 === p2) {
+                    return true;
+                } else {
+                    window.alert("Passwords do not match");
+                    return false;
+                }
+            }
+        </script>
 </head>
 
 <body>
     <% include ../partials/spellbookNav.ejs %>
         <div class="login-form">
-            <form action="/examples/actions/confirmation.php" method="post">
-                <h2 class="text-center">Signup</h2>
+            <form action="/api/users/create" method="post">
+                <h2 class="text-center">Sign Up</h2>
                 <div class="form-group">
                     <input type="text" class="form-control" name="username" placeholder="Username" required="required">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+                    <input type="password" class="form-control" name="password" id="p1" placeholder="Password" required="required">
                 </div>
                 <div class="form-group">
-                        <input type="password" class="form-control" name="passwordConfirm" placeholder="Confirm Password" required="required">
+                        <input type="password" class="form-control" name="passwordConfirm" id="p2" placeholder="Confirm Password" required="required">
                     </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                    <button type="submit" class="btn btn-primary btn-block" onclick="return confirmMatch()">Sign Up</button>
                 </div>
                 <div class="clearfix">
                 </div>

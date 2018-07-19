@@ -266,9 +266,33 @@ function handleGet(req, res, qtext) {
 ****************************************/
 //Creates a new user account
 function createUser(req, res) {
-    var stubText = "Stub: createUser()";
-    console.log(stubText);
-    res.send(stubText);
+    // var stubText = "Stub: createUser()";
+    // console.log(stubText);
+    // res.send(stubText);
+
+    if (req.body.username && req.body.password) {
+        try {
+            existsAccount(req.body.username, function (result) {
+                if (!result) {
+                    let username = req.body.username;
+                    let pass = req.body.password;
+                    let qtext = "INSERT INTO account(username, password) VALUES (" + processText(username) + ", " + processText(pass) + ");";
+                    console.log("Query:", qtext);
+                    res.send(qtext);
+                } else {
+                    console.log("User already exists");
+                    res.send("User already exists!");
+                }
+            })
+
+        } catch (error) {
+            console.error("Error creating new user");
+            console.error(error);
+        }
+    } else {
+        console.log("createUser(): Missing body parameters");
+        res.status(400).send("Bad request");
+    }
 }
 
 //Logs a user in
@@ -304,6 +328,21 @@ function removeSpellFromAccount(req, res) {
     var stubText = "Stub: removeSpellFromAccount()";
     console.log(stubText);
     res.send(stubText);
+}
+
+//Checks if an account already exists
+function existsAccount(username) {
+    let qtext = "SELECT id FROM account WHERE username=" + processText(username) + ";";
+    pool.query(qtext, function (err, result) {
+
+        //Throw error
+        if (err) { throw err; }
+
+        //Success
+        console.log("Back from db with result: ", result);
+
+        return result.rowCount > 0;
+    });
 }
 
 module.exports = {

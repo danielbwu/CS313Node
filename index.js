@@ -3,7 +3,7 @@ const path = require('path');
 
 const { Pool } = require("pg");
 const connectionString = process.env.DATABASE_URL;
-const pool = new Pool({connectionString: connectionString});
+const pool = new Pool({ connectionString: connectionString });
 
 var session = require('express-session');
 const PORT = process.env.PORT || 5000;
@@ -41,8 +41,8 @@ const app = express()
   .get('/api/schools', apiController.getSchools)
   .post('/api/spells/add', verifyAdmin, apiController.addSpell)
   .post('/api/spell/class/link', verifyAdmin, apiController.linkSpellToClass)
-  .post('/api/users/create', apiController.createUser)
-  .post('/api/users/login', apiController.login)
+  .post('/api/users/create', hash, apiController.createUser)
+  .post('/api/users/login', hash, apiController.login)
   .post('/api/users/logout', apiController.logout)
   .post('/api/users/delete', verifyUserDelete, apiController.deleteUser)
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
@@ -50,7 +50,7 @@ const app = express()
 
 //Redirects to home page
 function home(req, res) {
-  res.writeHead(301, {Location: "/Spells"});
+  res.writeHead(301, { Location: "/Spells" });
   res.end();
 }
 //View all spells
@@ -96,6 +96,34 @@ function verifyUserDelete(req, res, next) {
   next();
 }
 
+//Hashes password
+function hash(req, res, next) {
+  if (req.body.username && req.body.password) {
+    try {
+      //Hash password
+      bcrypt.genSalt(saltRounds, function (err, salt) {
+        bcrypt.hash(req.body.password, salt, function (err, hash) {
+          // Store hash in your password DB.
+          if (err) { throw err; }
+          else {
+            req.body.password = hash;
+            // res.json({username: req.body.username, password: req.body.password,
+            // hash: hash, passwordConfirm: req.body.passwordConfirm});
+            next();
+          }
+        });
+      });
+
+    } catch (error) {
+      console.error("Error creating new user");
+      console.error(error);
+    }
+  } else {
+    console.log("createUser(): Missing body parameters");
+    res.status(400).send("Bad request");
+  }
+}
+
 //Tests post 
 function postTest(req, res) {
   //if (req)
@@ -127,10 +155,10 @@ function getRates(req, res) {
 
   //Determine rate by type, then weight
   if (weight && type) {
-    switch(parseInt(type)) {
+    switch (parseInt(type)) {
       case 1: //Letters (stamped)
         console.log("Type: Letter (stamped)");
-        switch(Math.ceil(weight)) {
+        switch (Math.ceil(weight)) {
           case 1:
             rate = 0.5;
             break;
@@ -149,8 +177,8 @@ function getRates(req, res) {
         break;
 
       case 2: //Letters (metered)
-      console.log("Type: Letters (metered)");
-        switch(Math.ceil(weight)) {
+        console.log("Type: Letters (metered)");
+        switch (Math.ceil(weight)) {
           case 1:
             rate = 0.47;
             break;
@@ -169,8 +197,8 @@ function getRates(req, res) {
         break;
 
       case 3: //Large Envelopes (flats)
-      console.log("Type: Large Envelopes (flats)");
-        switch(Math.ceil(weight)) {
+        console.log("Type: Large Envelopes (flats)");
+        switch (Math.ceil(weight)) {
           case 1:
             rate = 1.00;
             break;
@@ -216,8 +244,8 @@ function getRates(req, res) {
         break;
 
       case 4: //First-Class Package Service - Retail
-      console.log("Type: First-Class Package Service - Retail");
-        switch(Math.ceil(weight)) {
+        console.log("Type: First-Class Package Service - Retail");
+        switch (Math.ceil(weight)) {
           case 1:
           case 2:
           case 3:
@@ -247,8 +275,8 @@ function getRates(req, res) {
             break;
           default:
             rate = 0;
-      }
-      break;
+        }
+        break;
 
       default:
         console.log("Type: Default");
@@ -256,9 +284,9 @@ function getRates(req, res) {
     }
   }
 
-  let types = ["", "Letter (Stamped)", "Letter (Metered)", 
-              "Large Envelope (Flats)", "First-Class Package Service—Retail"]
+  let types = ["", "Letter (Stamped)", "Letter (Metered)",
+    "Large Envelope (Flats)", "First-Class Package Service—Retail"]
   console.log("Rate:", rate);
   //res.set('Content-Type', 'application/javascript');
-  res.render('pages/rateResults', {weight: weight, type: types[parseInt(type)], rate: rate.toFixed(2)});
+  res.render('pages/rateResults', { weight: weight, type: types[parseInt(type)], rate: rate.toFixed(2) });
 }
