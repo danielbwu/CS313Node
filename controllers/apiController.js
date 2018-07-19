@@ -306,7 +306,8 @@ function login(req, res) {
 
         existsAccount(req.body.username, function (err, exists, result) {
             if (exists) {
-                console.log("Stub");
+                console.log("Loggin in");
+                res.send("Loggin in");
             }
         })
     }
