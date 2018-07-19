@@ -268,9 +268,6 @@ function handleGet(req, res, qtext) {
 ****************************************/
 //Creates a new user account
 function createUser(req, res) {
-    // var stubText = "Stub: createUser()";
-    // console.log(stubText);
-    // res.send(stubText);
 
     if (req.body.username && req.body.password) {
         try {
@@ -323,6 +320,7 @@ function login(req, res) {
                             console.log("Password match");
                             res.writeHead(301, { Location: "/Spells" });
                             req.session.user = result.rows[0].username;
+                            req.session.userId = result.rows[0].id;
                             console.log("User:", req.session.user);
                             res.end();
                         } else {
@@ -338,13 +336,6 @@ function login(req, res) {
         console.error("Error logging in");
         console.error(error);
     }
-}
-
-//Logs a user out
-function logout(req, res) {
-    var stubText = "Stub: logout())";
-    console.log(stubText);
-    res.send(stubText);
 }
 
 //Deletes a user account

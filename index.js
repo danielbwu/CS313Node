@@ -19,8 +19,8 @@ const app = express()
   .use(session({
     secret: 'placeholder-secret',
     resave: false,
-    duration: 1 * 60 * 1000,
-    activeDuration: 1 * 60 * 1000,
+    duration: 30 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000,
     saveUninitialized: true
   }))
   .use(bodyParser.json())
@@ -47,8 +47,10 @@ const app = express()
   .post('/api/spell/class/link', verifyAdmin, apiController.linkSpellToClass)
   .post('/api/users/create', hash, apiController.createUser)
   .post('/api/users/login', apiController.login)
-  .post('/api/users/logout', apiController.logout)
+  .post('/api/users/logout', logout)
   .post('/api/users/delete', verifyUserDelete, apiController.deleteUser)
+  .post('/api/user/spell/add', verifyLogin, apiController.addSpellToAccount)
+  .post('/api/user/spell/remove', verifyLogin, apiController.removeSpellFromAccount)
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 
@@ -60,7 +62,7 @@ function home(req, res) {
 
 //View all spells
 function searchSpells(req, res) {
-  res.render('pages/searchSpells');
+  res.render('pages/searchSpells', {session: req.session});
 }
 
 //Show user's saved spells
@@ -74,7 +76,7 @@ function verifyLogin(req, res, next) {
   if (req.session.user) {
     next();
   } else {
-    res.writeHead(301, { Location: "/signup" });
+    res.writeHead(301, { Location: "/login" });
     res.end();
   }
   next();
@@ -88,17 +90,12 @@ function verifyAdmin(req, res, next) {
 
 //Directs to admin spell add form
 function adminAddSpell(req, res) {
-  res.render('pages/addSpellForm');
+  res.render('pages/addSpellForm', {session: req.session});
 }
 
 //Directs to login page
 function login(req, res) {
   res.render('pages/login');
-}
-
-//Logs a user out
-function logout(req, res) {
-  res.send("Log out stub");
 }
 
 //Directs to signup page
@@ -110,6 +107,13 @@ function signup(req, res) {
 function verifyUserDelete(req, res, next) {
   console.log("Verifying User Delete");
   next();
+}
+
+//Logs a user out
+function logout(req, res) {
+  req.session.destroy();
+  res.writeHead(301, { Location: "/Spells" });
+  res.end();
 }
 
 //Hashes password
