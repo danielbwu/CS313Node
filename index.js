@@ -94,12 +94,12 @@ function adminAddSpell(req, res) {
 
 //Directs to login page
 function login(req, res) {
-  res.render('pages/login');
+  res.render('pages/login', {session: req.session});
 }
 
 //Directs to signup page
 function signup(req, res) {
-  res.render('pages/signup');
+  res.render('pages/signup', {session: req.session});
 }
 
 //Middleware for deleteing user
