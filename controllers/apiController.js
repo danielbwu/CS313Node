@@ -307,7 +307,14 @@ function login(req, res) {
         existsAccount(req.body.username, function (err, exists, result) {
             if (exists) {
                 console.log("Loggin in");
-                res.send("Loggin in");
+                
+                if (pass === result.rows[0].password) {
+                    console.log("Password match");
+                    res.send("Password match");
+                } else {
+                    console.log("No match");
+                    res.send("Invalid username or password");
+                }
             }
         })
     }
