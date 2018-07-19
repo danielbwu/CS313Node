@@ -278,7 +278,13 @@ function createUser(req, res) {
                     let pass = req.body.password;
                     let qtext = "INSERT INTO account(username, password) VALUES (" + processText(username) + ", " + processText(pass) + ");";
                     console.log("Query:", qtext);
-                    res.send(qtext);
+                    pool.query(qtext, function(err, response) {
+                        if (err) { throw err; }
+                        else {
+                            console.log("Successfully created new account");
+                            res.send("Success!");
+                        }
+                    })
                 } else {
                     console.log("User already exists");
                     res.send("User already exists!");
