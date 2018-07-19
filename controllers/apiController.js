@@ -319,8 +319,8 @@ function login(req, res) {
                 console.log("Sent:  ", pass);
                 console.log("Actual:", result.rows[0].password);
 
-                bcrypt.compare(pass, result.rows[0].password, function (err, res) {
-                    if (res) {
+                bcrypt.compare(pass, result.rows[0].password, function (err, match) {
+                    if (match) {
                         console.log("Password match");
                         res.send("Password match");
                     } else {
