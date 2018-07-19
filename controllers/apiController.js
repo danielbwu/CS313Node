@@ -303,6 +303,8 @@ function login(req, res) {
     if (req.body.username && req.body.password) {
         let username = req.body.username;
         let pass = req.body.password;
+        console.log("Username:", username);
+        console.log("Password:", pass);
 
         existsAccount(req.body.username, function (err, exists, result) {
             if (exists) {
