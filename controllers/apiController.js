@@ -340,7 +340,10 @@ function existsAccount(username) {
         //Success
         console.log("Back from db with result: ", result);
 
-        return result.rowCount > 0;
+        var exists = result.rowCount > 0;
+        console.log("Account exists:", exists);
+
+        return exists;
     });
 }
 
