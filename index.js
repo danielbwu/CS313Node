@@ -43,6 +43,7 @@ const app = express()
   .get('/api/spells', apiController.getSpellsMin)
   .get('/api/classes', apiController.getClasses)
   .get('/api/schools', apiController.getSchools)
+  .get('/session/details', verifyLogin, getSession)
   .post('/api/spells/add', verifyAdmin, apiController.addSpell)
   .post('/api/spell/class/link', verifyAdmin, apiController.linkSpellToClass)
   .post('/api/users/create', hash, apiController.createUser)
@@ -61,20 +62,24 @@ function home(req, res) {
 
 //View all spells
 function searchSpells(req, res) {
+  //req.session.user = "Username here";
+  //req.session.userId = "User ID";
   res.render('pages/searchSpells', {session: req.session});
 }
 
 //Show user's saved spells
 function mySpells(req, res) {
-  res.send(req.session.user);
+  res.render('pages/mySpells', {session: req.session});
 }
 
 //Verifies user login
 function verifyLogin(req, res, next) {
   console.log("Verifying login...");
   if (req.session.user) {
+    console.log("User found");
     next();
   } else {
+    console.log("No user found");
     res.writeHead(301, { Location: "/login" });
     res.end();
   }
@@ -113,6 +118,15 @@ function logout(req, res) {
   req.session.destroy();
   res.writeHead(301, { Location: "/Spells" });
   res.end();
+}
+
+//Get session user
+function getSession(req, res) {
+  if (req.session.user) {
+    res.status(200).json({user: req.session.user, id: req.session.userId});
+  } else {
+    res.status(500).send("No user");
+  }
 }
 
 //Hashes password

@@ -37,6 +37,14 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
     //Initializes data
     $scope.init = function () {
         getAllSpells();
+        $http.get('/session/details')
+            .then(function (response) {
+                $scope.session = response.data;
+                console.log($scope.session);
+            })
+            .catch(function (error) {
+                console.error(error);
+            })
     };
 
     //Gets all spells
@@ -132,5 +140,16 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
         if (a.level < b.level) { return -1; }
         if (a.name > b.name)   { return 1; }
         if (a.name < b.name)   { return -1; }
+    }
+
+    //Parses data from Express
+    function htmlDecode(input) {
+        var e = document.createElement('div');
+        e.innerHTML = input;
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+    }
+
+    function getCurrentUser() {
+
     }
 }]);

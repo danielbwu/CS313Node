@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-app="Spellbook" ng-controller="SpellBookController">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -17,7 +17,7 @@
                     <a href="/MySpells">My Spells</a>
                 </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" ng-if="session.user == null">
                 <li>
                     <a href="signup">
                         <span class="glyphicon glyphicon-user"></span> Sign Up</a>
@@ -26,8 +26,16 @@
                     <a href="login">
                         <span class="glyphicon glyphicon-log-in"></span> Login</a>
                 </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" ng-if="session.user != null">
                 <li>
-                    <p><%= session.user %></p>
+                    <a href="#">
+                        <%= session.user %>
+                    </a>
+                </li>
+                <li>
+                    <a href="logout">
+                        <span class="glyphicon glyphicon-log-out"></span> Log Out</a>
                 </li>
             </ul>
         </div>
