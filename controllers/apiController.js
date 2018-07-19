@@ -272,7 +272,7 @@ function createUser(req, res) {
 
     if (req.body.username && req.body.password) {
         try {
-            existsAccount(req.body.username, function (err, exists) {
+            existsAccount(req.body.username, function (err, exists, result) {
                 if (!exists) {
                     let username = req.body.username;
                     let pass = req.body.password;
@@ -296,9 +296,20 @@ function createUser(req, res) {
 
 //Logs a user in
 function login(req, res) {
-    var stubText = "Stub: login())";
-    console.log(stubText);
-    res.send(stubText);
+    // var stubText = "Stub: login())";
+    // console.log(stubText);
+    // res.send(stubText);
+
+    if (req.body.username && req.body.password) {
+        let username = req.body.username;
+        let pass = req.body.password;
+
+        existsAccount(req.body.username, function (err, exists, result) {
+            if (exists) {
+                console.log("Stub");
+            }
+        })
+    }
 }
 
 //Logs a user out
@@ -331,7 +342,7 @@ function removeSpellFromAccount(req, res) {
 
 //Checks if an account already exists
 function existsAccount(username, callBack) {
-    let qtext = "SELECT id FROM account WHERE username=" + processText(username) + ";";
+    let qtext = "SELECT * FROM account WHERE username=" + processText(username) + ";";
     pool.query(qtext, function (err, result) {
 
         //Throw error
@@ -343,7 +354,7 @@ function existsAccount(username, callBack) {
         var exists = result.rowCount > 0;
         console.log("Account exists:", exists);
 
-        callBack(err, exists);
+        callBack(err, exists, result);
     });
 }
 
