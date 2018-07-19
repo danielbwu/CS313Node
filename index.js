@@ -19,6 +19,8 @@ const app = express()
   .use(session({
     secret: 'placeholder-secret',
     resave: false,
+    duration: 1 * 60 * 1000,
+    activeDuration: 1 * 60 * 1000,
     saveUninitialized: true
   }))
   .use(bodyParser.json())
