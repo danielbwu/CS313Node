@@ -388,7 +388,6 @@ module.exports = {
     getSpellsForSchool: getSpellsForSchool,
     createUser: createUser,
     login: login,
-    logout: logout,
     deleteUser: deleteUser,
     addSpellToAccount: addSpellToAccount,
     removeSpellFromAccount: removeSpellFromAccount,
