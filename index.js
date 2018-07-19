@@ -31,6 +31,7 @@ const app = express()
   .get('/rates', (req, res) => res.render('pages/rates'))
   .get('/getRates', getRates)
   .get('/Spells', searchSpells)
+  .get('/MySpells', verifyLogin, mySpells)
   .get('/login', login)
   .get('/logout', logout)
   .get('/signup', signup)
@@ -54,14 +55,26 @@ function home(req, res) {
   res.writeHead(301, { Location: "/Spells" });
   res.end();
 }
+
 //View all spells
 function searchSpells(req, res) {
   res.render('pages/searchSpells');
 }
 
+//Show user's saved spells
+function mySpells(req, res) {
+  res.send(req.session.user);
+}
+
 //Verifies user login
 function verifyLogin(req, res, next) {
   console.log("Verifying login...");
+  if (req.session.user) {
+    next();
+  } else {
+    res.writeHead(301, { Location: "/signup" });
+    res.end();
+  }
   next();
 }
 

@@ -2,6 +2,7 @@ const { Pool } = require("pg");
 const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({ connectionString: connectionString });
 const bcrypt = require('bcrypt');
+var session = require('express-session');
 
 //Gets player classes
 // Route: /api/classes
@@ -303,26 +304,25 @@ function createUser(req, res) {
 
 //Logs a user in
 function login(req, res) {
-    // var stubText = "Stub: login())";
-    // console.log(stubText);
-    // res.send(stubText);
 
     if (req.body.username && req.body.password) {
-        var username = req.body.username;
-        var pass = req.body.password;
-        console.log("Username:", username);
-        console.log("Password:", pass);
-
         existsAccount(req.body.username, function (err, exists, result) {
-            if (exists) {
+            var username = req.body.username;
+            var pass = req.body.password;
+            console.log("Username:", username);
+            console.log("Password:", pass);
+            if (exists) { //Account exists
                 console.log("Loggin in");
                 console.log("Sent:  ", pass);
                 console.log("Actual:", result.rows[0].password);
 
+                //Check if passwords match
                 bcrypt.compare(pass, result.rows[0].password, function (err, match) {
                     if (match) {
                         console.log("Password match");
-                        res.send("Password match");
+                        res.writeHead(301, { Location: "/Spells" });
+                        res.session.user = username;
+                        res.end();
                     } else {
                         console.log("No match");
                         res.send("Invalid username or password");
