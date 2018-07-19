@@ -330,7 +330,7 @@ function removeSpellFromAccount(req, res) {
 }
 
 //Checks if an account already exists
-function existsAccount(username) {
+function existsAccount(username, callBack) {
     let qtext = "SELECT id FROM account WHERE username=" + processText(username) + ";";
     pool.query(qtext, function (err, result) {
 
@@ -343,7 +343,7 @@ function existsAccount(username) {
         var exists = result.rowCount > 0;
         console.log("Account exists:", exists);
 
-        return exists;
+        callBack(err, exists);
     });
 }
 
