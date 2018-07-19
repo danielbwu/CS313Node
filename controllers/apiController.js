@@ -304,33 +304,39 @@ function createUser(req, res) {
 
 //Logs a user in
 function login(req, res) {
+    try {
+        if (req.body.username && req.body.password) {
+            existsAccount(req.body.username, function (err, exists, result) {
+                var username = req.body.username;
+                var pass = req.body.password;
+                console.log("Username:", username);
+                console.log("Password:", pass);
+                if (exists) { //Account exists
+                    console.log("Loggin in");
+                    console.log("Sent:  ", pass);
+                    console.log("Actual:", result.rows[0].password);
 
-    if (req.body.username && req.body.password) {
-        existsAccount(req.body.username, function (err, exists, result) {
-            var username = req.body.username;
-            var pass = req.body.password;
-            console.log("Username:", username);
-            console.log("Password:", pass);
-            if (exists) { //Account exists
-                console.log("Loggin in");
-                console.log("Sent:  ", pass);
-                console.log("Actual:", result.rows[0].password);
+                    //Check if passwords match
+                    bcrypt.compare(pass, result.rows[0].password, function (err, match) {
+                        if (err) { throw err; }
+                        if (match) {
+                            console.log("Password match");
+                            res.writeHead(301, { Location: "/Spells" });
+                            req.session.user = result.rows[0].username;
+                            console.log("User:", req.session.user);
+                            res.end();
+                        } else {
+                            console.log("No match");
+                            res.send("Invalid username or password");
+                        }
+                    });
 
-                //Check if passwords match
-                bcrypt.compare(pass, result.rows[0].password, function (err, match) {
-                    if (match) {
-                        console.log("Password match");
-                        res.writeHead(301, { Location: "/Spells" });
-                        res.session.user = username;
-                        res.end();
-                    } else {
-                        console.log("No match");
-                        res.send("Invalid username or password");
-                    }
-                });
-
-            }
-        })
+                }
+            })
+        }
+    } catch (error) {
+        console.error("Error logging in");
+        console.error(error);
     }
 }
 
