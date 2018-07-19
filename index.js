@@ -83,7 +83,6 @@ function verifyLogin(req, res, next) {
     res.writeHead(301, { Location: "/login" });
     res.end();
   }
-  next();
 }
 
 //Verifies admin login
