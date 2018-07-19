@@ -37,6 +37,14 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
     //Initializes data
     $scope.init = function () {
         getAllSpells();
+        $http.get('/session/details')
+            .then(function (response) {
+                $scope.session = response.data;
+                console.log("Session", $scope.session);
+            })
+            .catch(function (error) {
+                console.error(error);
+            })
 
     };
 
