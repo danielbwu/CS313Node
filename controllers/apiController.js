@@ -334,7 +334,7 @@ function login(req, res) {
                         if (err) { throw err; }
                         if (match) {
                             console.log("Password match");
-                            res.writeHead(301, { Location: "/Spells" });
+                            res.writeHead(301, { Location: "/MySpells" });
                             req.session.user = result.rows[0].username;
                             req.session.userId = result.rows[0].id;
                             //console.log("User:", req.session.user);
