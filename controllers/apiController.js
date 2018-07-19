@@ -272,18 +272,17 @@ function createUser(req, res) {
 
     if (req.body.username && req.body.password) {
         try {
-            existsAccount(req.body.username, function (result) {
-                if (!result) {
-                    let username = req.body.username;
-                    let pass = req.body.password;
-                    let qtext = "INSERT INTO account(username, password) VALUES (" + processText(username) + ", " + processText(pass) + ");";
-                    console.log("Query:", qtext);
-                    res.send(qtext);
-                } else {
-                    console.log("User already exists");
-                    res.send("User already exists!");
-                }
-            })
+
+            if (!existsAccount(req.body.username)) {
+                let username = req.body.username;
+                let pass = req.body.password;
+                let qtext = "INSERT INTO account(username, password) VALUES (" + processText(username) + ", " + processText(pass) + ");";
+                console.log("Query:", qtext);
+                res.send(qtext);
+            } else {
+                console.log("User already exists");
+                res.send("User already exists!");
+            }
 
         } catch (error) {
             console.error("Error creating new user");
