@@ -11,7 +11,7 @@ var bodyParser = require('body-parser');
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const salt = bcrypt.genSalt(saltRounds);
+//const salt = bcrypt.genSalt(saltRounds);
 
 var apiController = require('./controllers/apiController.js');
 const app = express()
@@ -102,7 +102,7 @@ function hash(req, res, next) {
   if (req.body.username && req.body.password) {
     try {
       //Hash password
-      //bcrypt.genSalt(saltRounds, function (err, salt) {
+      bcrypt.genSalt(saltRounds, function (err, salt) {
         bcrypt.hash(req.body.password, salt, function (err, hash) {
           // Store hash in your password DB.
           if (err) { throw err; }
@@ -113,7 +113,7 @@ function hash(req, res, next) {
             next();
           }
         });
-      //});
+      });
 
     } catch (error) {
       console.error("Error creating new user");
