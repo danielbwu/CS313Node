@@ -1,6 +1,7 @@
 const { Pool } = require("pg");
 const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({ connectionString: connectionString });
+const bcrypt = require('bcrypt');
 
 //Gets player classes
 // Route: /api/classes
@@ -278,7 +279,7 @@ function createUser(req, res) {
                     let pass = req.body.password;
                     let qtext = "INSERT INTO account(username, password) VALUES (" + processText(username) + ", " + processText(pass) + ");";
                     console.log("Query:", qtext);
-                    pool.query(qtext, function(err, response) {
+                    pool.query(qtext, function (err, response) {
                         if (err) { throw err; }
                         else {
                             console.log("Successfully created new account");
@@ -307,8 +308,8 @@ function login(req, res) {
     // res.send(stubText);
 
     if (req.body.username && req.body.password) {
-        let username = req.body.username;
-        let pass = req.body.password;
+        var username = req.body.username;
+        var pass = req.body.password;
         console.log("Username:", username);
         console.log("Password:", pass);
 
@@ -317,13 +318,17 @@ function login(req, res) {
                 console.log("Loggin in");
                 console.log("Sent:  ", pass);
                 console.log("Actual:", result.rows[0].password);
-                if (pass === result.rows[0].password) {
-                    console.log("Password match");
-                    res.send("Password match");
-                } else {
-                    console.log("No match");
-                    res.send("Invalid username or password");
-                }
+
+                bcrypt.compare(pass, result.rows[0].password, function (err, res) {
+                    if (res) {
+                        console.log("Password match");
+                        res.send("Password match");
+                    } else {
+                        console.log("No match");
+                        res.send("Invalid username or password");
+                    }
+                });
+
             }
         })
     }
