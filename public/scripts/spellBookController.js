@@ -37,15 +37,21 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
     //Initializes data
     $scope.init = function () {
         getAllSpells();
+
+    };
+
+    $scope.initUser = function () {
+        console.log("Getting session details");
         $http.get('/session/details')
             .then(function (response) {
                 $scope.session = response.data;
-                console.log($scope.session);
+                console.log("Session", $scope.session);
+                getUserSpells();
             })
             .catch(function (error) {
                 console.error(error);
             })
-    };
+    }
 
     //Gets all spells
     function getAllSpells() {
@@ -53,6 +59,18 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
             .then(function (response) {
                 console.log("Spells:", response.data);
                 $scope.spells = response.data.sort(compare);
+            })
+            .catch(function (error) {
+                console.error("Error retrieving spells", error.data);
+            });
+    }
+
+    //Gets a user's saved spells
+    function getUserSpells() {
+        SpellBookService.getUserSpells()
+            .then(function (response) {
+                console.log(response.data);
+                $scope.spells = response.data;
             })
             .catch(function (error) {
                 console.error("Error retrieving spells", error.data);
@@ -138,8 +156,8 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
     function compare(a, b) {
         if (a.level > b.level) { return 1; }
         if (a.level < b.level) { return -1; }
-        if (a.name > b.name)   { return 1; }
-        if (a.name < b.name)   { return -1; }
+        if (a.name > b.name) { return 1; }
+        if (a.name < b.name) { return -1; }
     }
 
     //Parses data from Express
@@ -149,7 +167,4 @@ app.controller('SpellBookController', ['SpellBookService', '$scope', '$http', fu
         return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
     }
 
-    function getCurrentUser() {
-
-    }
 }]);

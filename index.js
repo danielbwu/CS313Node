@@ -51,6 +51,7 @@ const app = express()
   .post('/api/users/delete', verifyUserDelete, apiController.deleteUser)
   .post('/api/user/spell/add', verifyLogin, apiController.addSpellToAccount)
   .post('/api/user/spell/remove', verifyLogin, apiController.removeSpellFromAccount)
+  .post('/api/user/spells', verifyLogin, apiController.getSpellsForUser)
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 

@@ -29,5 +29,10 @@
         this.getSpellById = function (spellId) {
             return $http.get(baseurl + "spell?spellId=" + spellId);
         }
+
+        //Gets a user's saved spells
+        this.getUserSpells = function (userId) {
+            return $http.post(baseurl + "user/spells");
+        }
     });
 })();

@@ -131,6 +131,23 @@ function getSpellsForSchool(req, res) {
     res.send(stubText);
 }
 
+//Gets spells for user
+function getSpellsForUser(req, res) {
+    if (req.session.userId) {
+        try {
+            var qtext = "";
+            var qtext = "SELECT id, name, level FROM spell WHERE id IN (SELECT spell_id FROM account_spell WHERE account_id=" + req.session.userId + ");";
+            console.log("Query:", qtext);
+            res.send(qtext);
+        } catch (error) {
+            console.error("Error retrieving user spells");
+            console.error(error);
+        }
+    } else {
+        res.send("No user");
+    }
+}
+
 //Adds a spell to the database
 function addSpell(req, res) {
     console.log("Adding a new spell");
@@ -276,7 +293,7 @@ function createUser(req, res) {
                     let username = req.body.username;
                     let pass = req.body.password;
                     let qtext = "INSERT INTO account(username, password) VALUES (" + processText(username) + ", " + processText(pass) + ");";
-                    console.log("Query:", qtext);
+                    //console.log("Query:", qtext);
                     pool.query(qtext, function (err, response) {
                         if (err) { throw err; }
                         else {
@@ -306,12 +323,12 @@ function login(req, res) {
             existsAccount(req.body.username, function (err, exists, result) {
                 var username = req.body.username;
                 var pass = req.body.password;
-                console.log("Username:", username);
-                console.log("Password:", pass);
+                //console.log("Username:", username);
+                //console.log("Password:", pass);
                 if (exists) { //Account exists
                     console.log("Loggin in");
-                    console.log("Sent:  ", pass);
-                    console.log("Actual:", result.rows[0].password);
+                    //console.log("Sent:  ", pass);
+                    //console.log("Actual:", result.rows[0].password);
 
                     //Check if passwords match
                     bcrypt.compare(pass, result.rows[0].password, function (err, match) {
@@ -321,7 +338,7 @@ function login(req, res) {
                             res.writeHead(301, { Location: "/Spells" });
                             req.session.user = result.rows[0].username;
                             req.session.userId = result.rows[0].id;
-                            console.log("User:", req.session.user);
+                            //console.log("User:", req.session.user);
                             res.end();
                         } else {
                             console.log("No match");
@@ -377,6 +394,7 @@ function existsAccount(username, callBack) {
     });
 }
 
+
 module.exports = {
     getSpells: getSpells,
     getClasses: getClasses,
@@ -391,5 +409,6 @@ module.exports = {
     deleteUser: deleteUser,
     addSpellToAccount: addSpellToAccount,
     removeSpellFromAccount: removeSpellFromAccount,
-    getSpellsMin: getSpellsMin
+    getSpellsMin: getSpellsMin,
+    getSpellsForUser: getSpellsForUser
 }
