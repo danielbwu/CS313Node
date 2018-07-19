@@ -137,7 +137,7 @@ function getSpellsForUser(req, res) {
         try {
             var qtext = "";
             var qtext = "SELECT id, name, level FROM spell WHERE id IN (SELECT spell_id FROM account_spell WHERE account_id=" + req.session.userId + ");";
-            handleGet(qtext, req, res);
+            handleGet(req, res, qtext);
         } catch (error) {
             console.error("Error retrieving user spells");
             console.error(error);
