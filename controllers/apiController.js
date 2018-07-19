@@ -307,7 +307,8 @@ function login(req, res) {
         existsAccount(req.body.username, function (err, exists, result) {
             if (exists) {
                 console.log("Loggin in");
-                
+                console.log("Sent:  ", pass);
+                consoel.log("Actual:", result.rows[0].password);
                 if (pass === result.rows[0].password) {
                     console.log("Password match");
                     res.send("Password match");
